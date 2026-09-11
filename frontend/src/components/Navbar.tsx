@@ -24,6 +24,8 @@ export default function Navbar() {
       setActiveSection('services');
     } else if (pathname === '/contact') {
       setActiveSection('contact');
+    } else if (pathname === '/faqs') {
+      setActiveSection('faqs');
     } else {
       setActiveSection('who-we-are');
     }
@@ -33,7 +35,7 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      const sections = ['who-we-are', 'services', 'contact'];
+      const sections = ['who-we-are', 'services', 'contact', 'faqs'];
       let current = '';
 
       for (const section of sections) {
@@ -46,18 +48,19 @@ export default function Navbar() {
         }
       }
       
-      if (current) {
+      if (current && pathname === '/') {
         setActiveSection(current);
       }
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
   const navLinks = [
     { name: 'Who We Are', href: '/#who-we-are', id: 'who-we-are' },
     { name: 'Services', href: '/services', id: 'services' },
-    { name: 'Support & Contact', href: '/contact', id: 'contact' },
+    { name: 'FAQ\'s', href: '/faqs', id: 'faqs' },
+    { name: 'Contacts', href: '/contact', id: 'contact' },
   ];
 
   if (pathname === '/login') return null;

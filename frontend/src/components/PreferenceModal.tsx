@@ -1,50 +1,54 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import * as SelectPrimitive from '@radix-ui/react-select';
-import { X, Calculator, ChevronDown, Check } from 'lucide-react';
+import { X, Calculator, Check, Plus, Minus } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 
-const Select = ({ value, onValueChange, options }: { value: string, onValueChange: (v: string) => void, options: {value: string, label: string}[] }) => {
-  return (
-    <SelectPrimitive.Root value={value} onValueChange={onValueChange}>
-      <SelectPrimitive.Trigger className="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 dark:border-[#333] bg-white dark:bg-[#111] px-3 py-2 text-sm text-black dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white disabled:cursor-not-allowed disabled:opacity-50 transition-all hover:bg-gray-50 dark:hover:bg-[#1a1a1a]">
-        <SelectPrimitive.Value />
-        <SelectPrimitive.Icon asChild>
-          <ChevronDown className="h-4 w-4 opacity-50" />
-        </SelectPrimitive.Icon>
-      </SelectPrimitive.Trigger>
-      <SelectPrimitive.Portal>
-        <SelectPrimitive.Content className="relative z-[200] max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-gray-200 dark:border-[#333] bg-white dark:bg-[#111] text-black dark:text-white shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2">
-          <SelectPrimitive.Viewport className="p-1">
-            {options.map((opt) => (
-              <SelectPrimitive.Item 
-                key={opt.value} 
-                value={opt.value}
-                className="relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-gray-100 dark:focus:bg-[#222] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-colors"
-              >
-                <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-                  <SelectPrimitive.ItemIndicator>
-                    <Check className="h-4 w-4" />
-                  </SelectPrimitive.ItemIndicator>
-                </span>
-                <SelectPrimitive.ItemText>{opt.label}</SelectPrimitive.ItemText>
-              </SelectPrimitive.Item>
-            ))}
-          </SelectPrimitive.Viewport>
-        </SelectPrimitive.Content>
-      </SelectPrimitive.Portal>
-    </SelectPrimitive.Root>
-  );
-};
+const OptionCard = ({ selected, onClick, title, subtitle }: any) => (
+  <button 
+    onClick={onClick}
+    className={`relative flex flex-col text-left p-5 rounded-2xl border-2 transition-all duration-300 cursor-pointer w-full hover:scale-[1.02] active:scale-95 overflow-hidden ${
+      selected 
+        ? 'border-black dark:border-white bg-gray-50 dark:bg-white/5' 
+        : 'border-gray-200 dark:border-[#222] hover:border-gray-300 dark:hover:border-[#444] bg-transparent'
+    }`}
+  >
+    {selected && (
+      <div className="absolute top-4 right-4 w-5 h-5 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center shadow-sm">
+        <Check className="w-3 h-3" />
+      </div>
+    )}
+    <span className={`font-medium text-lg leading-tight mb-1 pr-6 ${selected ? 'text-black dark:text-white' : 'text-gray-700 dark:text-gray-300'}`}>
+      {title}
+    </span>
+    {subtitle && (
+      <span className={`text-[13px] font-medium ${selected ? 'text-gray-600 dark:text-gray-400' : 'text-gray-400 dark:text-gray-500'}`}>
+        {subtitle}
+      </span>
+    )}
+  </button>
+);
 
-const CustomInput = ({ type = "text", value, onChange, min, placeholder, rows }: any) => {
-  const baseClass = "flex w-full rounded-md border border-gray-300 dark:border-[#333] bg-white dark:bg-[#111] px-3 py-2 text-sm text-black dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white transition-all hover:bg-gray-50 dark:hover:bg-[#1a1a1a]";
-  if (type === "textarea") {
-    return <textarea rows={rows} value={value} onChange={onChange} placeholder={placeholder} className={baseClass + " resize-none"} />;
-  }
-  return <input type={type} min={min} value={value} onChange={onChange} placeholder={placeholder} className={baseClass + " h-10"} />;
-};
+const NumberStepper = ({ value, onChange, min = 1, step = 1, label }: any) => (
+  <div className="flex items-center justify-between p-4 px-5 rounded-2xl border-2 border-gray-200 dark:border-[#222] bg-transparent">
+    <span className="font-medium text-lg text-black dark:text-white">{label}</span>
+    <div className="flex items-center gap-3">
+      <button 
+        onClick={() => Number(value) > min && onChange(String(Number(value) - step))} 
+        className="w-10 h-10 rounded-full bg-gray-100 dark:bg-[#111] flex items-center justify-center hover:bg-gray-200 dark:hover:bg-[#222] active:scale-95 transition-all text-black dark:text-white border border-gray-200 dark:border-[#333] shadow-sm cursor-pointer"
+      >
+        <Minus className="w-4 h-4" />
+      </button>
+      <span className="w-10 text-center font-bold text-xl">{value}</span>
+      <button 
+        onClick={() => onChange(String(Number(value) + step))} 
+        className="w-10 h-10 rounded-full bg-gray-100 dark:bg-[#111] flex items-center justify-center hover:bg-gray-200 dark:hover:bg-[#222] active:scale-95 transition-all text-black dark:text-white border border-gray-200 dark:border-[#333] shadow-sm cursor-pointer"
+      >
+        <Plus className="w-4 h-4" />
+      </button>
+    </div>
+  </div>
+);
 
 export default function PreferenceModal({ service, onClose }: { service: any, onClose: () => void }) {
   const { addToCart } = useCart();
@@ -123,253 +127,214 @@ export default function PreferenceModal({ service, onClose }: { service: any, on
   return (
     <Dialog.Root open={true} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-        <Dialog.Content className="fixed left-[50%] top-[50%] z-[100] grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-gray-200 dark:border-[#333] bg-white dark:bg-[#0a0a0a] p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-2xl">
+        <Dialog.Overlay className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm z-[100] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+        <Dialog.Content className="fixed left-[50%] top-[50%] z-[100] w-full max-w-4xl translate-x-[-50%] translate-y-[-50%] overflow-hidden bg-white dark:bg-[#050505] shadow-2xl sm:rounded-[2rem] border border-black/5 dark:border-white/10 p-0 duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]">
           
-          <div className="flex flex-col space-y-1.5 text-center sm:text-left">
-            <Dialog.Title className="text-lg font-semibold leading-none tracking-tight text-black dark:text-white">
-              Configure {service.title}
-            </Dialog.Title>
-            <Dialog.Description className="text-sm text-gray-500 dark:text-[#888]">
-              Provide details to get an accurate Philippine commission estimate.
-            </Dialog.Description>
-          </div>
-
-          <div className="grid gap-5 py-4 max-h-[60vh] overflow-y-auto px-1 custom-scrollbar">
+          <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
             
-            {/* Web Dev */}
-            {service.id === 'web-dev' && (
-              <>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Total Pages</label>
-                  <div className="col-span-3">
-                    <CustomInput type="number" min="1" value={details.pages || '3'} onChange={(e: any) => setDetails({...details, pages: e.target.value})} />
-                  </div>
+            {/* Left Side: Preview & Info (Hidden on very small screens) */}
+            <div className="hidden md:flex flex-col w-2/5 bg-gray-50 dark:bg-[#0a0a0a] p-10 border-r border-gray-200 dark:border-[#1a1a1a] relative">
+              {service.image && (
+                <div className="w-full h-56 rounded-[1.5rem] overflow-hidden mb-10 shadow-sm border border-black/5 dark:border-white/5 relative">
+                   <img src={service.image} alt={service.title} className="w-full h-full object-cover filter grayscale opacity-90" />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">CMS / Blog</label>
-                  <div className="col-span-3">
-                    <Select 
-                      value={details.cms || 'no'} 
-                      onValueChange={(v) => setDetails({...details, cms: v})}
-                      options={[{value: 'no', label: 'No (+₱0)'}, {value: 'yes', label: 'Yes (+₱5,000)'}]}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">E-commerce</label>
-                  <div className="col-span-3">
-                    <Select 
-                      value={details.ecommerce || 'no'} 
-                      onValueChange={(v) => setDetails({...details, ecommerce: v})}
-                      options={[{value: 'no', label: 'No (+₱0)'}, {value: 'yes', label: 'Yes (+₱8,000)'}]}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
+              )}
+              <h2 className="text-3xl lg:text-4xl font-medium tracking-tight mb-4 text-black dark:text-white leading-tight">
+                {service.title}
+              </h2>
+              <p className="text-gray-500 dark:text-gray-400 font-light text-[15px] leading-relaxed">
+                {service.desc || 'Provide details to get an accurate Philippine commission estimate.'}
+              </p>
+              
+              <div className="mt-auto pt-10">
+                <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">Base Rate</div>
+                <div className="text-3xl font-medium text-black dark:text-white">{service.priceLabel}</div>
+              </div>
+            </div>
 
-            {/* Landing Page */}
-            {service.id === 'landing-page' && (
-              <>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Copywriting</label>
-                  <div className="col-span-3">
-                    <Select 
-                      value={details.copywriting || 'no'} 
-                      onValueChange={(v) => setDetails({...details, copywriting: v})}
-                      options={[{value: 'no', label: 'Provided by client'}, {value: 'yes', label: 'Write for me (+₱2,000)'}]}
-                    />
-                  </div>
+            {/* Right Side: Configurator */}
+            <div className="flex flex-col w-full md:w-3/5 overflow-hidden">
+              <div className="flex items-center justify-between p-6 sm:p-8 border-b border-gray-100 dark:border-[#1a1a1a] md:hidden">
+                <div>
+                  <Dialog.Title className="text-xl font-medium text-black dark:text-white leading-tight">
+                    {service.title}
+                  </Dialog.Title>
+                  <Dialog.Description className="text-sm text-gray-500 mt-1">
+                    Configure your inquiry.
+                  </Dialog.Description>
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Custom Graphics</label>
-                  <div className="col-span-3">
-                    <Select 
-                      value={details.graphics || 'no'} 
-                      onValueChange={(v) => setDetails({...details, graphics: v})}
-                      options={[{value: 'no', label: 'Stock/Provided'}, {value: 'yes', label: 'Custom Graphics (+₱1,500)'}]}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
+                <Dialog.Close asChild>
+                  <button className="rounded-full w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-[#111] hover:bg-gray-200 dark:hover:bg-[#222] transition-colors cursor-pointer text-gray-500">
+                    <X className="h-5 w-5" />
+                  </button>
+                </Dialog.Close>
+              </div>
 
-            {/* Video Editing */}
-            {service.id === 'video-editing' && (
-              <>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Raw Footage (Mins)</label>
-                  <div className="col-span-3">
-                    <CustomInput type="number" min="1" value={details.footageLength || '10'} onChange={(e: any) => setDetails({...details, footageLength: e.target.value})} />
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">VFX & Motion</label>
-                  <div className="col-span-3">
-                    <Select 
-                      value={details.vfx || 'no'} 
-                      onValueChange={(v) => setDetails({...details, vfx: v})}
-                      options={[{value: 'no', label: 'Standard Edits'}, {value: 'yes', label: 'Heavy FX (+₱2,000)'}]}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Rush Delivery</label>
-                  <div className="col-span-3">
-                    <Select 
-                      value={details.rush || 'no'} 
-                      onValueChange={(v) => setDetails({...details, rush: v})}
-                      options={[{value: 'no', label: 'Standard (3-5 Days)'}, {value: 'yes', label: '24-48 Hours (+₱1,000)'}]}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
+              <div className="flex-1 overflow-y-auto custom-scrollbar p-6 sm:p-10">
+                <div className="space-y-10">
+                  
+                  {/* Web Dev */}
+                  {service.id === 'web-dev' && (
+                    <>
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Project Scale</label>
+                        <NumberStepper label="Total Pages" value={details.pages || '3'} onChange={(v:any) => setDetails({...details, pages: v})} min={1} />
+                      </div>
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Features</label>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <OptionCard selected={details.cms === 'yes'} onClick={() => setDetails({...details, cms: details.cms === 'yes' ? 'no' : 'yes'})} title="CMS / Blog" subtitle="+₱5,000" />
+                          <OptionCard selected={details.ecommerce === 'yes'} onClick={() => setDetails({...details, ecommerce: details.ecommerce === 'yes' ? 'no' : 'yes'})} title="E-Commerce" subtitle="+₱8,000" />
+                        </div>
+                      </div>
+                    </>
+                  )}
 
-            {/* Graphic Design */}
-            {service.id === 'graphic-design' && (
-              <>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Brand Guidelines</label>
-                  <div className="col-span-3">
-                    <Select 
-                      value={details.guidelines || 'no'} 
-                      onValueChange={(v) => setDetails({...details, guidelines: v})}
-                      options={[{value: 'no', label: 'No (+₱0)'}, {value: 'yes', label: 'Yes (+₱4,000)'}]}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Social Media Kit</label>
-                  <div className="col-span-3">
-                    <Select 
-                      value={details.socialKit || 'no'} 
-                      onValueChange={(v) => setDetails({...details, socialKit: v})}
-                      options={[{value: 'no', label: 'No (+₱0)'}, {value: 'yes', label: 'Yes (+₱2,000)'}]}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-            
-            {/* Architectural */}
-            {service.id === 'architectural' && (
-              <>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Floor Area (SQM)</label>
-                  <div className="col-span-3">
-                    <CustomInput type="number" min="10" value={details.sqm || '100'} onChange={(e: any) => setDetails({...details, sqm: e.target.value})} />
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">3D Render Views</label>
-                  <div className="col-span-3">
-                    <CustomInput type="number" min="0" value={details.renders || '0'} onChange={(e: any) => setDetails({...details, renders: e.target.value})} />
-                  </div>
-                </div>
-              </>
-            )}
-            
-            {/* Engineering */}
-            {service.id === 'engineering' && (
-              <>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Discipline</label>
-                  <div className="col-span-3">
-                    <Select 
-                      value={details.discipline || 'civil'} 
-                      onValueChange={(v) => setDetails({...details, discipline: v})}
-                      options={[
-                        {value: 'civil', label: 'Civil & Structural'}, 
-                        {value: 'mechanical', label: 'Mechanical (MEP)'},
-                        {value: 'electrical', label: 'Electrical'},
-                        {value: 'plumbing', label: 'Plumbing / Sanitary'}
-                      ]}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Sign & Seal</label>
-                  <div className="col-span-3">
-                    <Select 
-                      value={details.signSeal || 'no'} 
-                      onValueChange={(v) => setDetails({...details, signSeal: v})}
-                      options={[{value: 'no', label: 'Drafting Only'}, {value: 'yes', label: 'Licensed Sign & Seal (+₱5,000)'}]}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
+                  {/* Landing Page */}
+                  {service.id === 'landing-page' && (
+                    <>
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Content</label>
+                        <OptionCard selected={details.copywriting === 'yes'} onClick={() => setDetails({...details, copywriting: details.copywriting === 'yes' ? 'no' : 'yes'})} title="Include Copywriting" subtitle="We write the sales copy (+₱2,000)" />
+                      </div>
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Assets</label>
+                        <OptionCard selected={details.graphics === 'yes'} onClick={() => setDetails({...details, graphics: details.graphics === 'yes' ? 'no' : 'yes'})} title="Custom Graphics" subtitle="Bespoke illustrations & icons (+₱1,500)" />
+                      </div>
+                    </>
+                  )}
 
-            {/* Virtual Assistant */}
-            {service.id === 'va' && (
-              <>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Hours per Week</label>
-                  <div className="col-span-3">
-                    <CustomInput type="number" min="5" value={details.hours || '10'} onChange={(e: any) => setDetails({...details, hours: e.target.value})} />
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Specialized Tasks</label>
-                  <div className="col-span-3">
-                    <Select 
-                      value={details.specialized || 'no'} 
-                      onValueChange={(v) => setDetails({...details, specialized: v})}
-                      options={[{value: 'no', label: 'Admin & Emails (Base Rate)'}, {value: 'yes', label: 'Bookkeeping/Technical (+₱150/hr)'}]}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
+                  {/* Video Editing */}
+                  {service.id === 'video-editing' && (
+                    <>
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Source Footage</label>
+                        <NumberStepper label="Raw Minutes" value={details.footageLength || '10'} onChange={(v:any) => setDetails({...details, footageLength: v})} min={1} />
+                      </div>
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Upgrades</label>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <OptionCard selected={details.vfx === 'yes'} onClick={() => setDetails({...details, vfx: details.vfx === 'yes' ? 'no' : 'yes'})} title="Heavy VFX" subtitle="+₱2,000" />
+                          <OptionCard selected={details.rush === 'yes'} onClick={() => setDetails({...details, rush: details.rush === 'yes' ? 'no' : 'yes'})} title="Rush Delivery" subtitle="+₱1,000" />
+                        </div>
+                      </div>
+                    </>
+                  )}
 
-            {/* Project Management */}
-            {service.id === 'project-management' && (
-              <>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <label className="text-right text-[13px] font-medium text-black dark:text-white leading-tight">Team Size</label>
-                  <div className="col-span-3">
-                    <CustomInput type="number" min="1" value={details.teamSize || '5'} onChange={(e: any) => setDetails({...details, teamSize: e.target.value})} />
-                  </div>
-                </div>
-              </>
-            )}
+                  {/* Graphic Design */}
+                  {service.id === 'graphic-design' && (
+                    <div className="space-y-4">
+                      <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Deliverables</label>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <OptionCard selected={details.guidelines === 'yes'} onClick={() => setDetails({...details, guidelines: details.guidelines === 'yes' ? 'no' : 'yes'})} title="Brand Guidelines" subtitle="Full brand book (+₱4,000)" />
+                        <OptionCard selected={details.socialKit === 'yes'} onClick={() => setDetails({...details, socialKit: details.socialKit === 'yes' ? 'no' : 'yes'})} title="Social Media Kit" subtitle="Templates & assets (+₱2,000)" />
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Architectural */}
+                  {service.id === 'architectural' && (
+                    <div className="space-y-8">
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Scope</label>
+                        <NumberStepper label="Floor Area (SQM)" step={10} value={details.sqm || '100'} onChange={(v:any) => setDetails({...details, sqm: v})} min={10} />
+                      </div>
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Visuals</label>
+                        <NumberStepper label="3D Render Views" value={details.renders || '0'} onChange={(v:any) => setDetails({...details, renders: v})} min={0} />
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Engineering */}
+                  {service.id === 'engineering' && (
+                    <>
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Discipline</label>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <OptionCard selected={!details.discipline || details.discipline === 'civil'} onClick={() => setDetails({...details, discipline: 'civil'})} title="Civil/Structural" />
+                          <OptionCard selected={details.discipline === 'mechanical'} onClick={() => setDetails({...details, discipline: 'mechanical'})} title="Mechanical" />
+                          <OptionCard selected={details.discipline === 'electrical'} onClick={() => setDetails({...details, discipline: 'electrical'})} title="Electrical" />
+                          <OptionCard selected={details.discipline === 'plumbing'} onClick={() => setDetails({...details, discipline: 'plumbing'})} title="Plumbing" />
+                        </div>
+                      </div>
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Authentication</label>
+                        <OptionCard selected={details.signSeal === 'yes'} onClick={() => setDetails({...details, signSeal: details.signSeal === 'yes' ? 'no' : 'yes'})} title="Licensed Sign & Seal" subtitle="+₱5,000" />
+                      </div>
+                    </>
+                  )}
 
-            {service.id === 'custom' && (
-              <div className="grid grid-cols-4 items-start gap-4">
-                <label className="text-right text-[13px] font-medium text-black dark:text-white pt-2 leading-tight">Describe</label>
-                <div className="col-span-3">
-                  <CustomInput type="textarea" rows={4} value={details.description || ''} onChange={(e: any) => setDetails({...details, description: e.target.value})} placeholder="Tell us what you need..." />
+                  {/* Virtual Assistant */}
+                  {service.id === 'va' && (
+                    <>
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Engagement</label>
+                        <NumberStepper label="Hours per Week" value={details.hours || '10'} onChange={(v:any) => setDetails({...details, hours: v})} min={5} />
+                      </div>
+                      <div className="space-y-4">
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Specialization</label>
+                        <OptionCard selected={details.specialized === 'yes'} onClick={() => setDetails({...details, specialized: details.specialized === 'yes' ? 'no' : 'yes'})} title="Technical / Bookkeeping" subtitle="+₱150/hr rate increase" />
+                      </div>
+                    </>
+                  )}
+
+                  {/* Project Management */}
+                  {service.id === 'project-management' && (
+                    <div className="space-y-4">
+                      <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Team Scale</label>
+                      <NumberStepper label="Team Size Managed" value={details.teamSize || '5'} onChange={(v:any) => setDetails({...details, teamSize: v})} min={1} />
+                    </div>
+                  )}
+
+                  {/* Custom Scope */}
+                  {service.id === 'custom' && (
+                    <div className="space-y-4">
+                      <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Project Details</label>
+                      <textarea 
+                        rows={6} 
+                        value={details.description || ''} 
+                        onChange={(e) => setDetails({...details, description: e.target.value})} 
+                        placeholder="Tell us what you need in detail..." 
+                        className="w-full p-5 rounded-2xl border-2 border-gray-200 dark:border-[#222] bg-transparent focus:border-black dark:focus:border-white outline-none resize-none transition-colors text-lg"
+                      />
+                    </div>
+                  )}
+
                 </div>
               </div>
-            )}
-          </div>
 
-          <div className="flex items-center justify-between mt-2 p-4 bg-gray-50 dark:bg-[#111] rounded-xl border border-gray-100 dark:border-[#222]">
-            <div className="flex items-center text-sm font-medium text-gray-500">
-              <Calculator className="w-4 h-4 mr-2" /> 
-              {service.id === 'va' ? 'Est. Weekly Total' : 'Est. Project Total'}
-            </div>
-            <div className="text-xl font-semibold text-black dark:text-white">
-              {service.id === 'custom' ? 'TBD' : `₱${estimatedPrice.toLocaleString()}`}
-            </div>
-          </div>
+              {/* Bottom Actions Area */}
+              <div className="p-6 sm:p-10 border-t border-gray-100 dark:border-[#1a1a1a] bg-white dark:bg-[#050505]">
+                <div className="flex items-center justify-between mb-8">
+                  <div className="text-sm font-bold uppercase tracking-widest text-gray-400 flex items-center">
+                    <Calculator className="w-4 h-4 mr-2" />
+                    Est. Total
+                  </div>
+                  <div className="text-3xl sm:text-4xl font-medium tracking-tight text-black dark:text-white">
+                    {service.id === 'custom' ? 'TBD' : `₱${estimatedPrice.toLocaleString()}`}
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <button onClick={onClose} className="flex-1 py-4 sm:py-5 rounded-full font-medium bg-gray-100 dark:bg-[#111] hover:bg-gray-200 dark:hover:bg-[#222] text-black dark:text-white transition-colors cursor-pointer active:scale-95 text-lg">
+                    Cancel
+                  </button>
+                  <button onClick={handleSave} className="flex-[2] py-4 sm:py-5 rounded-full font-medium bg-black dark:bg-white text-white dark:text-black hover:scale-[1.02] active:scale-95 transition-all shadow-xl cursor-pointer text-lg">
+                    Add to Inquiry
+                  </button>
+                </div>
+              </div>
 
-          <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-3 mt-4">
-            <button onClick={onClose} className="mt-2 sm:mt-0 inline-flex h-11 items-center justify-center rounded-md border border-gray-300 dark:border-[#444] bg-transparent px-5 py-2 text-sm font-medium text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#222] focus:outline-none hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer">
-              Cancel
-            </button>
-            <button onClick={handleSave} className="inline-flex h-11 items-center justify-center rounded-md bg-black dark:bg-white px-5 py-2 text-sm font-medium text-white dark:text-black hover:scale-[1.02] active:scale-95 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white cursor-pointer shadow-md">
-              Add to Inquiry
-            </button>
+              <Dialog.Close asChild>
+                <button className="hidden md:flex absolute right-6 top-6 rounded-full w-10 h-10 items-center justify-center bg-gray-100 dark:bg-[#111] hover:bg-gray-200 dark:hover:bg-[#222] transition-colors cursor-pointer text-gray-500">
+                  <X className="h-5 w-5" />
+                  <span className="sr-only">Close</span>
+                </button>
+              </Dialog.Close>
+
+            </div>
           </div>
-          <Dialog.Close asChild>
-            <button className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-gray-100 data-[state=open]:text-gray-500 cursor-pointer">
-              <X className="h-4 w-4 text-black dark:text-white" />
-              <span className="sr-only">Close</span>
-            </button>
-          </Dialog.Close>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

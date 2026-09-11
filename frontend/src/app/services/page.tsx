@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { Search, CheckCircle, DraftingCompass, X } from 'lucide-react';
+import { Search, CheckCircle, DraftingCompass, X, ArrowUpRight } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import PreferenceModal from '@/components/PreferenceModal';
 
@@ -55,7 +55,7 @@ export const servicesData = [
   },
   {
     id: "architectural",
-    title: "Architectural Layouts & 3D Renders",
+    title: "Architectural Layouts & Renders",
     category: "Architectural & Engineering",
     desc: "Precise 2D CAD floor plans, structural draftings, Revit building models, and photorealistic 3D renders.",
     features: ["Architectural & Space Planning", "Photorealistic 3D Visualization", "CAD & PDF Deliverables"],
@@ -79,7 +79,7 @@ export const servicesData = [
   },
   {
     id: "va",
-    title: "Virtual Assistant & Admin Support",
+    title: "Virtual Assistant & Support",
     category: "Virtual Assistants & Ops",
     desc: "Dedicated executive administrative support, email inbox triage, calendar management, and client communication.",
     features: ["Dedicated Hourly/Monthly Retainer", "Trained in Remote Tools", "Daily Task Reporting"],
@@ -91,7 +91,7 @@ export const servicesData = [
   },
   {
     id: "project-management",
-    title: "Project Management & Workflows",
+    title: "Project Management",
     category: "Virtual Assistants & Ops",
     desc: "Setup and management of Notion/Asana workspaces, Agile sprint planning, and team output oversight.",
     features: ["Custom Workspace SOP Setup", "Weekly Sprint Tracking", "Team Milestone Management"],
@@ -118,183 +118,159 @@ export default function ServicesPage() {
   });
 
   return (
-    <div className="pt-32 min-h-screen bg-gray-50 dark:bg-[#0a0a0a]">
+    <div className="pt-24 lg:pt-40 min-h-screen bg-white dark:bg-[#050505] text-black dark:text-white selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black pb-32">
       {selectedService && (
         <PreferenceModal 
           service={selectedService} 
           onClose={() => setSelectedService(null)} 
         />
       )}
-      <section id="services" className="pb-32 px-6 sm:px-8 md:px-12 bg-gray-50 dark:bg-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <span className="text-[11px] font-semibold tracking-wider uppercase mb-6 block text-gray-500 dark:text-gray-400">Solutions & Scope</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl leading-tight font-semibold tracking-tighter text-black dark:text-white mb-6">
-              Comprehensive Digital Services
-            </h2>
-            <p className="text-lg text-gray-500 dark:text-[#888] font-normal leading-relaxed">
-              From web development and video post-production to CAD architectural drafting and executive VA support &mdash; custom-tailored for your growth.
-            </p>
-          </div>
 
-          {/* Sleek Search and Filters Browser */}
-          <div className="max-w-5xl mx-auto mb-20">
-            <div className="relative group mb-10">
-              <div className="absolute -inset-1 bg-gradient-to-r from-gray-200 to-gray-100 dark:from-neutral-800 dark:to-neutral-900 rounded-[1.5rem] blur opacity-40 group-hover:opacity-60 transition duration-500"></div>
-              <div className="relative flex items-center bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#333] rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                <Search className="w-6 h-6 ml-6 text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors" />
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="What service are you looking for?" 
-                  className="w-full bg-transparent pl-4 pr-6 py-5 text-lg focus:outline-none text-black dark:text-white placeholder:text-gray-400 font-medium"
-                />
-                {searchQuery && (
-                  <button onClick={() => setSearchQuery("")} className="mr-6 p-2 text-gray-400 hover:text-black dark:hover:text-white transition-colors cursor-pointer rounded-full hover:bg-gray-100 dark:hover:bg-[#222]">
-                    <X className="w-5 h-5" />
-                  </button>
-                )}
-              </div>
-            </div>
-            
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              {categories.map((cat, i) => (
-                <button 
-                  key={i} 
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-5 py-2.5 rounded-full text-[14px] font-medium transition-all duration-300 cursor-pointer shadow-sm hover:scale-[1.03] active:scale-95 ${
-                    activeCategory === cat 
-                      ? 'bg-black text-white dark:bg-white dark:text-black border-transparent shadow-md' 
-                      : 'bg-white dark:bg-[#111] text-gray-600 dark:text-[#aaa] border border-gray-200 dark:border-[#333] hover:border-gray-400 dark:hover:border-[#555] hover:text-black dark:hover:text-white'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {filteredServices.length === 0 ? (
-            <div className="text-center py-32 flex flex-col items-center justify-center">
-              <div className="w-20 h-20 bg-gray-100 dark:bg-[#111] rounded-full flex items-center justify-center mb-6 border border-gray-200 dark:border-[#333]">
-                <Search className="w-8 h-8 text-gray-400" />
-              </div>
-              <h3 className="text-xl font-bold text-black dark:text-white mb-2">No results found</h3>
-              <p className="text-gray-500 dark:text-[#888] mb-8 max-w-sm mx-auto">
-                We couldn't find any services matching your search for "{searchQuery}". Try adjusting your filters or search term.
-              </p>
-              <button 
-                onClick={() => {setSearchQuery(""); setActiveCategory("All Services");}}
-                className="bg-black dark:bg-white text-white dark:text-black px-6 py-2.5 rounded-full text-[14px] font-medium hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-md cursor-pointer"
-              >
-                Clear Search
-              </button>
-            </div>
-          ) : (
-            <div 
-              className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-              onMouseMove={(e) => {
-                const cards = document.querySelectorAll('.spotlight-card');
-                for (const card of Array.from(cards)) {
-                  const rect = (card as HTMLElement).getBoundingClientRect();
-                  const x = e.clientX - rect.left;
-                  const y = e.clientY - rect.top;
-                  (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
-                  (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
-                }
-              }}
-            >
-              {filteredServices.map((service) => (
-                <div key={service.id} className="spotlight-card group relative bg-white dark:bg-[#000] rounded-xl border border-gray-200 dark:border-[#333] hover:border-black/20 dark:hover:border-white/20 transition-all duration-300 overflow-hidden flex flex-col h-full shadow-sm">
-                  <div className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100 bg-[radial-gradient(600px_circle_at_var(--mouse-x)_var(--mouse-y),rgba(0,0,0,0.03),transparent_40%)] dark:bg-[radial-gradient(600px_circle_at_var(--mouse-x)_var(--mouse-y),rgba(255,255,255,0.04),transparent_40%)] z-20" />
-                  
-                  {service.image && (
-                    <div className="w-full h-36 overflow-hidden border-b border-gray-200 dark:border-[#333] relative z-10">
-                      <img src={service.image} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </div>
-                  )}
-                  <div className="p-5 flex flex-col flex-grow relative z-10">
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-[16px] font-semibold text-black dark:text-white leading-tight pr-2">{service.title}</h3>
-                      {service.tag && (
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-gray-100 dark:bg-[#111] text-gray-600 dark:text-[#888] border border-gray-200 dark:border-[#333] whitespace-nowrap tracking-wider">
-                          {service.tag}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-[14px] text-gray-500 dark:text-[#888] mb-6 flex-grow leading-relaxed">
-                      {service.desc}
-                    </p>
-                    
-                    <ul className="space-y-2 mb-6">
-                      {service.features.map((feat, idx) => (
-                        <li key={idx} className="flex items-start text-[13px] text-gray-600 dark:text-[#888] group-hover:text-gray-900 dark:group-hover:text-gray-300 transition-colors">
-                          <CheckCircle className="w-4 h-4 mr-2 text-black dark:text-white shrink-0 mt-[1px]" />
-                          <span className="leading-tight">{feat}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-[#222]">
-                      <div>
-                        <div className="text-[17px] font-bold text-black dark:text-white">{service.priceLabel}</div>
-                        <div className="text-[10px] text-gray-500">{service.priceUnit}</div>
-                      </div>
-                      <button 
-                        onClick={() => setSelectedService(service)}
-                        className="bg-black dark:bg-white text-white dark:text-black px-5 py-2.5 rounded-md text-[13px] font-medium hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer shadow-sm"
-                      >
-                        Request Quote
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              
-              {/* Custom Scope Card */}
-              <div className="spotlight-card group relative rounded-xl p-[1px] overflow-hidden sm:col-span-2 lg:col-span-3 xl:col-span-4 mt-4">
-                <div className="absolute inset-[-100%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#000_50%,transparent_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#fff_50%,transparent_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className="relative bg-gray-50 dark:bg-[#0a0a0a] rounded-xl border border-dashed border-gray-300 dark:border-[#444] group-hover:border-transparent transition-colors duration-300 overflow-hidden flex flex-col md:flex-row items-center justify-between p-8 md:p-10 z-10 w-full h-full">
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-                  
-                  <div className="relative z-10 flex-1 text-left mb-8 md:mb-0 md:pr-12">
-                     <div className="flex items-center gap-3 mb-4">
-                       <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-200 dark:bg-[#222] text-black dark:text-white">
-                         <DraftingCompass className="w-5 h-5" />
-                       </div>
-                       <span className="text-[10px] font-bold px-2 py-1 rounded bg-black text-white dark:bg-white dark:text-black tracking-wider uppercase">
-                         Flexible Scope
-                       </span>
-                     </div>
-                     <h3 className="text-2xl font-bold text-black dark:text-white mb-3">Custom Service Scope</h3>
-                     <p className="text-[15px] text-gray-500 dark:text-[#888] max-w-2xl leading-relaxed mb-6">
-                       Have a specific project or multi-discipline requirement? Tell us what you need, and our team will structure a custom package for you.
-                     </p>
-                  </div>
-                  
-                  <div className="relative z-10 flex-shrink-0 w-full md:w-auto flex flex-col items-center md:items-end border-t md:border-t-0 md:border-l border-gray-200 dark:border-[#333] pt-6 md:pt-0 md:pl-10">
-                     <div className="text-[13px] text-gray-500 mb-4 font-medium uppercase tracking-wider">Custom quote on request</div>
-                     <button 
-                      onClick={() => setSelectedService({
-                        id: "custom",
-                        title: "Custom Service Scope",
-                        category: "Custom",
-                        basePrice: 0,
-                        priceLabel: "Custom",
-                        priceUnit: "TBD"
-                      })}
-                      className="w-full md:w-auto bg-black dark:bg-white text-white dark:text-black px-8 py-3.5 rounded-md text-[14px] font-medium hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer shadow-md">
-                       Inquire Custom Scope
-                     </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+      <div className="max-w-[1500px] mx-auto px-6 sm:px-12 lg:px-24">
+        
+        {/* Massive Header (Scaled down) */}
+        <div className="mb-16 lg:mb-24">
+          <h1 className="text-4xl sm:text-6xl lg:text-[5.5rem] leading-[1] font-medium tracking-tighter mb-6">
+            Services.
+          </h1>
+          <p className="text-lg sm:text-xl font-light text-gray-500 max-w-3xl leading-relaxed">
+            From web development and video post-production to CAD architectural drafting and executive VA support &mdash; custom-tailored for your growth.
+          </p>
         </div>
-      </section>
+
+        {/* Editorial Search & Filters */}
+        <div className="mb-16 lg:mb-24">
+          <div className="relative mb-10 lg:mb-12">
+            <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-gray-300 dark:text-gray-800" />
+            <input 
+              type="text" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="What are you looking for?" 
+              className="w-full bg-transparent border-b-2 border-gray-200 dark:border-[#222] pl-10 sm:pl-12 pr-10 py-4 text-xl sm:text-2xl lg:text-3xl font-light focus:outline-none text-black dark:text-white placeholder:text-gray-300 dark:placeholder:text-gray-800 transition-colors focus:border-black dark:focus:border-white"
+            />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery("")} className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black dark:hover:text-white transition-colors cursor-pointer">
+                <X className="w-5 h-5 sm:w-6 sm:h-6" />
+              </button>
+            )}
+          </div>
+          
+          <div className="flex flex-wrap items-center gap-6 sm:gap-10">
+            {categories.map((cat, i) => (
+              <button 
+                key={i} 
+                onClick={() => setActiveCategory(cat)}
+                className={`text-sm sm:text-[15px] font-medium tracking-tight transition-colors duration-300 cursor-pointer uppercase ${
+                  activeCategory === cat 
+                    ? 'text-black dark:text-white border-b-2 border-black dark:border-white pb-1' 
+                    : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 pb-1 border-b-2 border-transparent'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Service Grid - Large Naked Minimalist Blocks */}
+        {filteredServices.length === 0 ? (
+          <div className="text-center py-32 flex flex-col items-center justify-center border-t border-gray-200 dark:border-gray-900">
+            <Search className="w-12 h-12 text-gray-300 mb-6" />
+            <h3 className="text-2xl font-medium text-black dark:text-white mb-4 tracking-tight">No results found.</h3>
+            <p className="text-[15px] text-gray-500 max-w-sm mx-auto font-light mb-10">
+              We couldn't find any services matching "{searchQuery}".
+            </p>
+            <button 
+              onClick={() => {setSearchQuery(""); setActiveCategory("All Services");}}
+              className="text-[15px] font-medium underline underline-offset-8 hover:opacity-60 transition-opacity"
+            >
+              Clear Filters
+            </button>
+          </div>
+        ) : (
+          <div className="grid lg:grid-cols-2 gap-x-12 xl:gap-x-20 gap-y-16 lg:gap-y-24">
+            {filteredServices.map((service) => (
+              <div key={service.id} className="group flex flex-col h-full">
+                {service.image && (
+                  <div className="w-full h-[250px] sm:h-[350px] rounded-3xl overflow-hidden bg-gray-100 dark:bg-[#111] mb-6 relative">
+                    <img src={service.image} alt={service.title} className="w-full h-full object-cover filter grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105" />
+                    {service.tag && (
+                      <div className="absolute top-5 left-5 bg-white/90 dark:bg-black/90 backdrop-blur-md text-black dark:text-white px-4 py-2 rounded-full text-[10px] font-bold tracking-widest uppercase">
+                        {service.tag}
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                <h3 className="text-2xl sm:text-3xl font-medium mb-3 tracking-tight group-hover:translate-x-2 transition-transform duration-500">{service.title}</h3>
+                
+                <p className="text-[15px] sm:text-base font-light text-gray-500 dark:text-gray-400 mb-8 leading-relaxed max-w-md">
+                  {service.desc}
+                </p>
+                
+                <div className="flex-grow">
+                  <ul className="space-y-3 mb-10">
+                    {service.features.map((feat, idx) => (
+                      <li key={idx} className="flex items-center text-[14px] sm:text-[15px] text-gray-600 dark:text-gray-400 border-b border-gray-100 dark:border-gray-900 pb-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700 mr-4 shrink-0" />
+                        <span className="font-light">{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="flex items-center justify-between mt-auto pt-6 border-t-2 border-black dark:border-white">
+                  <div>
+                    <div className="text-[10px] font-bold tracking-widest text-gray-400 uppercase mb-1.5">Starting At</div>
+                    <div className="text-xl sm:text-2xl font-medium">{service.priceLabel}</div>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedService(service)}
+                    className="flex items-center gap-3 text-base font-medium hover:opacity-60 transition-opacity cursor-pointer group/btn"
+                  >
+                    Request
+                    <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-[#111] border border-transparent dark:border-white/10 text-black dark:text-white flex items-center justify-center shrink-0 group-hover/btn:scale-110 transition-transform duration-300">
+                      <ArrowUpRight className="w-4 h-4" />
+                    </div>
+                  </button>
+                </div>
+              </div>
+            ))}
+            
+            {/* Custom Scope Full Width */}
+            <div className="lg:col-span-2 group flex flex-col md:flex-row items-start md:items-center justify-between gap-10 bg-gray-50 dark:bg-[#0a0a0a] rounded-3xl p-8 sm:p-12 border border-gray-200 dark:border-[#222] mt-8">
+               <div className="flex-1">
+                 <div className="flex items-center gap-3 mb-5">
+                   <div className="w-10 h-10 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center shrink-0">
+                     <DraftingCompass className="w-5 h-5" />
+                   </div>
+                   <span className="text-[11px] font-bold uppercase tracking-widest text-gray-400">Flexible Scope</span>
+                 </div>
+                 <h3 className="text-2xl sm:text-3xl lg:text-4xl font-medium mb-3 tracking-tight">Build your custom package.</h3>
+                 <p className="text-[15px] sm:text-base font-light text-gray-500 max-w-2xl leading-relaxed">
+                   Have a specific project or multi-discipline requirement? Tell us what you need, and our team will structure a custom package just for you.
+                 </p>
+               </div>
+               <button 
+                  onClick={() => setSelectedService({
+                    id: "custom",
+                    title: "Custom Service Scope",
+                    category: "Custom",
+                    basePrice: 0,
+                    priceLabel: "Custom",
+                    priceUnit: "TBD"
+                  })}
+                  className="group/btn flex items-center gap-3 bg-black dark:bg-white text-white dark:text-black px-8 py-4 rounded-full text-base font-medium hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl w-full md:w-auto justify-center"
+                >
+                  Inquire Now
+                  <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
+                </button>
+            </div>
+
+          </div>
+        )}
+      </div>
     </div>
   );
 }
