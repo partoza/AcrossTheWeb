@@ -189,11 +189,11 @@ export default function ServicesPage() {
             </button>
           </div>
         ) : (
-          <div className="grid lg:grid-cols-2 gap-x-12 xl:gap-x-20 gap-y-16 lg:gap-y-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 lg:gap-x-12 gap-y-12 lg:gap-y-16">
             {filteredServices.map((service) => (
               <div key={service.id} className="group flex flex-col h-full">
                 {service.image && (
-                  <div className="w-full h-[250px] sm:h-[350px] rounded-3xl overflow-hidden bg-gray-100 dark:bg-[#111] mb-6 relative">
+                  <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden bg-gray-100 dark:bg-[#111] mb-6 relative">
                     <img src={service.image} alt={service.title} className="w-full h-full object-cover filter grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105" />
                     {service.tag && (
                       <div className="absolute top-5 left-5 bg-white/90 dark:bg-black/90 backdrop-blur-md text-black dark:text-white px-4 py-2 rounded-full text-[10px] font-bold tracking-widest uppercase">
@@ -203,16 +203,16 @@ export default function ServicesPage() {
                   </div>
                 )}
                 
-                <h3 className="text-2xl sm:text-3xl font-medium mb-3 tracking-tight group-hover:translate-x-2 transition-transform duration-500">{service.title}</h3>
+                <h3 className="text-xl sm:text-2xl font-medium mb-3 tracking-tight group-hover:translate-x-1.5 transition-transform duration-500">{service.title}</h3>
                 
-                <p className="text-[15px] sm:text-base font-light text-gray-500 dark:text-gray-400 mb-8 leading-relaxed max-w-md">
+                <p className="text-[14px] sm:text-[15px] font-light text-gray-500 dark:text-gray-400 mb-8 leading-relaxed max-w-md">
                   {service.desc}
                 </p>
                 
                 <div className="flex-grow">
                   <ul className="space-y-3 mb-10">
                     {service.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-center text-[14px] sm:text-[15px] text-gray-600 dark:text-gray-400 border-b border-gray-100 dark:border-gray-900 pb-3">
+                      <li key={idx} className="flex items-center text-[13px] sm:text-[14px] text-gray-600 dark:text-gray-400 border-b border-gray-100 dark:border-gray-900 pb-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700 mr-4 shrink-0" />
                         <span className="font-light">{feat}</span>
                       </li>
@@ -220,18 +220,18 @@ export default function ServicesPage() {
                   </ul>
                 </div>
                 
-                <div className="flex items-center justify-between mt-auto pt-6 border-t-2 border-black dark:border-white">
+                <div className="flex items-center justify-between mt-auto pt-5 border-t-2 border-black dark:border-white">
                   <div>
-                    <div className="text-[10px] font-bold tracking-widest text-gray-400 uppercase mb-1.5">Starting At</div>
-                    <div className="text-xl sm:text-2xl font-medium">{service.priceLabel}</div>
+                    <div className="text-[9px] font-bold tracking-widest text-gray-400 uppercase mb-1">Starting At</div>
+                    <div className="text-lg sm:text-xl font-medium">{service.priceLabel}</div>
                   </div>
                   <button 
                     onClick={() => setSelectedService(service)}
-                    className="flex items-center gap-3 text-base font-medium hover:opacity-60 transition-opacity cursor-pointer group/btn"
+                    className="flex items-center gap-2.5 text-[15px] font-medium hover:opacity-60 transition-opacity cursor-pointer group/btn"
                   >
                     Request
-                    <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-[#111] border border-transparent dark:border-white/10 text-black dark:text-white flex items-center justify-center shrink-0 group-hover/btn:scale-110 transition-transform duration-300">
-                      <ArrowUpRight className="w-4 h-4" />
+                    <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-[#111] border border-transparent dark:border-white/10 text-black dark:text-white flex items-center justify-center shrink-0 group-hover/btn:scale-110 transition-transform duration-300">
+                      <ArrowUpRight className="w-3.5 h-3.5" />
                     </div>
                   </button>
                 </div>
@@ -239,7 +239,7 @@ export default function ServicesPage() {
             ))}
             
             {/* Custom Scope Full Width */}
-            <div className="lg:col-span-2 group flex flex-col md:flex-row items-start md:items-center justify-between gap-10 bg-gray-50 dark:bg-[#0a0a0a] rounded-3xl p-8 sm:p-12 border border-gray-200 dark:border-[#222] mt-8">
+            <div className="md:col-span-2 xl:col-span-3 group flex flex-col md:flex-row items-start md:items-center justify-between gap-10 bg-gray-50 dark:bg-[#0a0a0a] rounded-3xl p-8 sm:p-12 border border-gray-200 dark:border-[#222] mt-4">
                <div className="flex-1">
                  <div className="flex items-center gap-3 mb-5">
                    <div className="w-10 h-10 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center shrink-0">

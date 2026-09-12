@@ -54,6 +54,7 @@ export default function PreferenceModal({ service, onClose }: { service: any, on
   const { addToCart } = useCart();
   const [details, setDetails] = useState<Record<string, any>>({});
   const [estimatedPrice, setEstimatedPrice] = useState(service.basePrice);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let price = service.basePrice;
@@ -114,6 +115,12 @@ export default function PreferenceModal({ service, onClose }: { service: any, on
   }, [details, service.basePrice, service.id]);
 
   const handleSave = () => {
+    if (service.id === 'custom' && (!details.description || details.description.trim() === '')) {
+      setError('Project details are required for custom scopes.');
+      return;
+    }
+    setError(null);
+
     addToCart({
       serviceId: service.id,
       title: service.title,
@@ -130,7 +137,7 @@ export default function PreferenceModal({ service, onClose }: { service: any, on
         <Dialog.Overlay className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm z-[100] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
         <Dialog.Content className="fixed left-[50%] top-[50%] z-[100] w-full max-w-4xl translate-x-[-50%] translate-y-[-50%] overflow-hidden bg-white dark:bg-[#050505] shadow-2xl sm:rounded-[2rem] border border-black/5 dark:border-white/10 p-0 duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]">
           
-          <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
+          <div className="flex flex-col md:flex-row h-[90vh] sm:h-[650px]">
             
             {/* Left Side: Preview & Info (Hidden on very small screens) */}
             <div className="hidden md:flex flex-col w-2/5 bg-gray-50 dark:bg-[#0a0a0a] p-10 border-r border-gray-200 dark:border-[#1a1a1a] relative">
@@ -234,7 +241,7 @@ export default function PreferenceModal({ service, onClose }: { service: any, on
                   
                   {/* Architectural */}
                   {service.id === 'architectural' && (
-                    <div className="space-y-8">
+                    <>
                       <div className="space-y-4">
                         <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Scope</label>
                         <NumberStepper label="Floor Area (SQM)" step={10} value={details.sqm || '100'} onChange={(v:any) => setDetails({...details, sqm: v})} min={10} />
@@ -243,7 +250,7 @@ export default function PreferenceModal({ service, onClose }: { service: any, on
                         <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Visuals</label>
                         <NumberStepper label="3D Render Views" value={details.renders || '0'} onChange={(v:any) => setDetails({...details, renders: v})} min={0} />
                       </div>
-                    </div>
+                    </>
                   )}
                   
                   {/* Engineering */}
@@ -290,16 +297,34 @@ export default function PreferenceModal({ service, onClose }: { service: any, on
                   {/* Custom Scope */}
                   {service.id === 'custom' && (
                     <div className="space-y-4">
-                      <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Project Details</label>
+                      <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Project Details *</label>
                       <textarea 
                         rows={6} 
                         value={details.description || ''} 
-                        onChange={(e) => setDetails({...details, description: e.target.value})} 
+                        onChange={(e) => {
+                          setDetails({...details, description: e.target.value});
+                          if (error) setError(null);
+                        }} 
                         placeholder="Tell us what you need in detail..." 
-                        className="w-full p-5 rounded-2xl border-2 border-gray-200 dark:border-[#222] bg-transparent focus:border-black dark:focus:border-white outline-none resize-none transition-colors text-lg"
+                        className={`w-full p-5 rounded-2xl border-2 bg-transparent outline-none resize-none transition-colors text-lg ${error ? 'border-red-500 focus:border-red-600' : 'border-gray-200 dark:border-[#222] focus:border-black dark:focus:border-white'}`}
                       />
+                      {error && (
+                        <p className="text-red-500 text-sm font-medium ml-1 mt-1">{error}</p>
+                      )}
                     </div>
                   )}
+
+                  {/* Additional Notes (For all services) */}
+                  <div className="space-y-4">
+                    <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Other Comments</label>
+                    <textarea 
+                      rows={3} 
+                      value={details.notes || ''} 
+                      onChange={(e) => setDetails({...details, notes: e.target.value})} 
+                      placeholder="Any specific instructions or preferences? (Optional)" 
+                      className="w-full p-5 rounded-2xl border-2 border-gray-200 dark:border-[#222] bg-transparent focus:border-black dark:focus:border-white outline-none resize-none transition-colors text-lg"
+                    />
+                  </div>
 
                 </div>
               </div>

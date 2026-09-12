@@ -34,29 +34,29 @@ export default function Footer() {
 
         {/* Column 2: Quick Links */}
         <div>
-          <h3 className="font-bold text-black dark:text-white text-[14px] mb-10 h-5 flex items-center">Quick Links</h3>
-          <ul className="space-y-5 text-[13px] font-medium text-[#888]">
-            <li><Link href="/#about" className="hover:text-black dark:hover:text-white transition-colors">About</Link></li>
+          <h3 className="font-bold text-black dark:text-white text-[16px] mb-10 h-5 flex items-center">Quick Links</h3>
+          <ul className="space-y-5 text-[15px] font-medium text-[#888]">
+            <li><Link href="/#about" className="hover:text-black dark:hover:text-white transition-colors">Who We Are</Link></li>
+            <li><Link href="/services" className="hover:text-black dark:hover:text-white transition-colors">Services</Link></li>
             <li><Link href="/faqs" className="hover:text-black dark:hover:text-white transition-colors">FAQ's</Link></li>
-            <li><Link href="/#pricing" className="hover:text-black dark:hover:text-white transition-colors">Pricing</Link></li>
-            <li><Link href="/contact" className="hover:text-black dark:hover:text-white transition-colors">Contact</Link></li>
+            <li><Link href="/contact" className="hover:text-black dark:hover:text-white transition-colors">Contacts</Link></li>
           </ul>
         </div>
 
         {/* Column 3: Legal */}
         <div>
-          <h3 className="font-bold text-black dark:text-white text-[14px] mb-10 h-5 flex items-center">Legal</h3>
-          <ul className="space-y-5 text-[13px] font-medium text-[#888]">
-            <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Privacy Policy</Link></li>
-            <li><Link href="#" className="hover:text-black dark:hover:text-white transition-colors">Terms & Condition</Link></li>
+          <h3 className="font-bold text-black dark:text-white text-[16px] mb-10 h-5 flex items-center">Legal</h3>
+          <ul className="space-y-5 text-[15px] font-medium text-[#888]">
+            <li><Link href="/legal?tab=privacy" className="hover:text-black dark:hover:text-white transition-colors">Privacy Policy</Link></li>
+            <li><Link href="/legal?tab=terms" className="hover:text-black dark:hover:text-white transition-colors">Terms & Condition</Link></li>
           </ul>
         </div>
 
         {/* Column 4: Need Help? */}
         <div>
-          <h3 className="font-bold text-black dark:text-white text-[14px] mb-10 h-5 flex items-center">Need Help?</h3>
-          <a href="mailto:support@acrosstheweb.app" className="block text-[13px] font-medium text-[#888] hover:text-black dark:hover:text-white transition-colors mb-6">
-            support@acrosstheweb.app
+          <h3 className="font-bold text-black dark:text-white text-[16px] mb-10 h-5 flex items-center">Need Help?</h3>
+          <a href="mailto:acrosstheweb2026@gmail.com" className="block text-[15px] font-medium text-[#888] hover:text-black dark:hover:text-white transition-colors mb-6">
+            acrosstheweb2026@gmail.com
           </a>
           <div className="flex items-center gap-4 text-[#888]">
             <a href="#" className="hover:text-black dark:hover:text-white transition-colors" aria-label="Facebook">

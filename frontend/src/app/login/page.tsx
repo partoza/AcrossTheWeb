@@ -7,13 +7,14 @@ import { motion } from 'framer-motion';
 
 export default function LoginPage() {
   return (
-    <div className="min-h-[calc(100vh+72px)] -mt-[72px] flex w-full bg-white dark:bg-[#050505]">
+    <div className="h-screen -mt-[72px] flex w-full bg-white dark:bg-[#0a0a0a]">
       
       {/* Left Side (Black/Brand Area) */}
-      <div className="flex w-full lg:w-1/2 bg-[#050505] text-white flex-col justify-between p-8 lg:p-12 xl:p-16 relative overflow-hidden selection:bg-white/20 min-h-[calc(100vh+72px)] lg:min-h-0">
-        
-        {/* Background Image with Dark Blend */}
-        <div className="absolute inset-0 z-0">
+      <div className="flex w-full lg:w-1/2 bg-white dark:bg-[#0a0a0a] p-4 sm:p-6 lg:p-8 h-full">
+        <div className="flex w-full bg-[#050505] text-white flex-col justify-between p-8 lg:p-12 xl:p-16 relative overflow-hidden rounded-[2rem] lg:rounded-[3rem] border border-gray-200 dark:border-white/10 shadow-2xl selection:bg-white/20">
+          
+          {/* Background Image with Dark Blend */}
+          <div className="absolute inset-0 z-0">
           <img 
             src="/login-bg.png" 
             alt="Background" 
@@ -91,18 +92,7 @@ export default function LoginPage() {
             </Link>
           </div>
         </motion.div>
-
-        {/* Bottom Footer */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="relative z-10 w-full text-center"
-        >
-          <div className="text-[12px] text-[#666] font-medium">
-            &copy; {new Date().getFullYear()} Across The Web. All rights reserved.
-          </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Right Side (White/Login Area) */}
@@ -133,7 +123,11 @@ export default function LoginPage() {
 
           <div className="space-y-3">
             <button
-              onClick={() => signIn('google', { callbackUrl: '/' })}
+              onClick={() => {
+                const searchParams = new URLSearchParams(window.location.search);
+                const callbackUrl = searchParams.get('callbackUrl') || '/';
+                signIn('google', { callbackUrl });
+              }}
               className="relative w-full group flex items-center justify-center gap-3 bg-black dark:bg-white text-white dark:text-black px-6 py-4 rounded-[14px] font-medium text-[14px] hover:shadow-xl hover:shadow-black/10 hover:-translate-y-[1px] active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer"
             >
               <div className="bg-white rounded-full p-0.5">
@@ -151,9 +145,9 @@ export default function LoginPage() {
           <div className="mt-12 text-center">
             <p className="text-[13px] text-gray-500 dark:text-gray-400">
               By continuing, you agree to our{' '}
-              <a href="#" className="text-black dark:text-white font-medium hover:underline underline-offset-4 cursor-pointer">Terms of Service</a>
+              <Link href="/legal?tab=terms" className="text-black dark:text-white font-medium hover:underline underline-offset-4 cursor-pointer">Terms of Service</Link>
               {' '}and{' '}
-              <a href="#" className="text-black dark:text-white font-medium hover:underline underline-offset-4 cursor-pointer">Privacy Policy</a>.
+              <Link href="/legal?tab=privacy" className="text-black dark:text-white font-medium hover:underline underline-offset-4 cursor-pointer">Privacy Policy</Link>.
             </p>
           </div>
         </motion.div>

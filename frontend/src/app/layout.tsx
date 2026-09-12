@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Providers } from "@/components/Providers";
 import CartDrawer from "@/components/CartDrawer";
+import WelcomeModal from "@/components/WelcomeModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <CartDrawer />
+          <WelcomeModal />
         </Providers>
       </body>
     </html>

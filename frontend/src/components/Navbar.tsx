@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Menu, X, Monitor } from 'lucide-react';
+import { ShoppingCart, Menu, X, Monitor, ChevronDown, LogOut } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import { usePathname } from 'next/navigation';
@@ -11,6 +11,7 @@ import { useSession, signOut, signIn } from 'next-auth/react';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const { items, setIsCartOpen } = useCart();
@@ -57,7 +58,7 @@ export default function Navbar() {
   }, [pathname]);
 
   const navLinks = [
-    { name: 'Who We Are', href: '/#who-we-are', id: 'who-we-are' },
+    { name: 'Who We Are', href: '/', id: 'who-we-are' },
     { name: 'Services', href: '/services', id: 'services' },
     { name: 'FAQ\'s', href: '/faqs', id: 'faqs' },
     { name: 'Contacts', href: '/contact', id: 'contact' },
@@ -90,7 +91,7 @@ export default function Navbar() {
               alt="AcrossTheWeb" 
               className="w-8 h-8 rounded-full object-cover"
             />
-            <div className="text-black dark:text-white font-bold text-xl tracking-tight font-sans hidden sm:block">
+            <div className="text-black dark:text-white font-bold text-xl tracking-tight font-sans block">
               acrosstheweb
             </div>
           </Link>
@@ -134,15 +135,37 @@ export default function Navbar() {
           </button>
 
           {session ? (
-            <div className="hidden sm:flex items-center gap-2.5 bg-gray-50 dark:bg-[#111] pl-1.5 pr-4 py-1.5 rounded-full border border-gray-200 dark:border-[#333] shadow-sm">
-              <img src={session.user?.image || ''} alt="Profile" className="w-8 h-8 rounded-full border border-gray-200 dark:border-[#444]" />
-              <div className="flex flex-col">
-                <span className="text-[12.5px] font-bold text-black dark:text-white leading-tight">{session.user?.name}</span>
-                <button onClick={() => signOut()} className="text-[10px] font-medium text-gray-500 hover:text-red-500 text-left transition-colors leading-tight cursor-pointer">Sign out</button>
-              </div>
+            <div className="relative hidden sm:block">
+              <button 
+                onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                className="flex items-center gap-2.5 bg-white dark:bg-[#111] pl-1.5 pr-3 py-1.5 rounded-full border border-gray-200 dark:border-[#333] shadow-sm hover:bg-gray-50 dark:hover:bg-[#222] transition-colors cursor-pointer"
+              >
+                <img src={session.user?.image || ''} alt="Profile" className="w-8 h-8 rounded-full border border-gray-200 dark:border-[#444]" />
+                <span className="text-[13px] font-bold text-black dark:text-white leading-tight">{session.user?.name?.split(' ')[0]}</span>
+                <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-transform ${isProfileDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {isProfileDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#161616] border border-black/10 dark:border-white/10 rounded-2xl p-2 shadow-2xl z-50 flex flex-col">
+                  <div className="px-3 py-2.5 border-b border-black/5 dark:border-white/5 mb-1 flex flex-col">
+                    <span className="text-[14px] font-bold text-black dark:text-white">{session.user?.name}</span>
+                    <span className="text-[11px] font-medium text-gray-500 truncate">{session.user?.email}</span>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setIsProfileDropdownOpen(false);
+                      signOut();
+                    }} 
+                    className="flex items-center gap-2.5 w-full text-left px-3 py-2.5 text-[13px] font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-xl transition-colors cursor-pointer"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Sign out
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
-            <Link href="/login" className="bg-black dark:bg-[#f4f4f5] text-white dark:text-black px-6 py-2.5 rounded-full text-[15px] font-medium hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-sm cursor-pointer">
+            <Link href={`/login?callbackUrl=${encodeURIComponent(pathname)}`} className="hidden sm:inline-flex items-center justify-center bg-black dark:bg-[#f4f4f5] text-white dark:text-black px-6 py-2.5 rounded-full text-[15px] font-medium hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-sm cursor-pointer">
               Get Started
             </Link>
           )}
@@ -185,6 +208,38 @@ export default function Navbar() {
             Cart
             <span className="bg-[#0d9488] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{items.length}</span>
           </button>
+          
+          <div className="h-[1px] bg-black/5 dark:bg-white/5 w-full my-2" />
+
+          {session ? (
+            <div className="flex flex-col gap-2">
+              <div className="px-4 py-2 flex items-center gap-3">
+                <img src={session.user?.image || ''} alt="Profile" className="w-8 h-8 rounded-full border border-gray-200 dark:border-[#444]" />
+                <div className="flex flex-col">
+                  <span className="text-[14px] font-bold text-black dark:text-white leading-tight">{session.user?.name}</span>
+                  <span className="text-[11px] font-medium text-gray-500 truncate">{session.user?.email}</span>
+                </div>
+              </div>
+              <button 
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  signOut();
+                }} 
+                className="flex items-center gap-2.5 w-full text-left px-4 py-2.5 text-[14px] font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-xl transition-colors cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign out
+              </button>
+            </div>
+          ) : (
+            <Link 
+              href={`/login?callbackUrl=${encodeURIComponent(pathname)}`} 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="mt-2 flex items-center justify-center bg-black dark:bg-[#f4f4f5] text-white dark:text-black px-4 py-3 rounded-xl text-[15px] font-medium shadow-sm"
+            >
+              Get Started
+            </Link>
+          )}
         </div>
       )}
     </nav>
