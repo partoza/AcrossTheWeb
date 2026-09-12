@@ -111,6 +111,9 @@ export async function POST(req: Request) {
           String(item.title || '').slice(0, 200)
         );
         const safePrice = Number(item.estimatedPrice) || 0;
+        const priceDisplay = (safeTitle.toLowerCase().includes('custom') || safePrice === 0) 
+          ? 'To Be Discussed' 
+          : `₱${safePrice.toLocaleString()}`;
 
         const details = Object.entries(item.details || {})
           .filter(([, v]) => v && v !== 'no')
@@ -126,7 +129,7 @@ export async function POST(req: Request) {
           <p style="font-size: 13px; color: #666; margin: 0;">${details}</p>
         </td>
         <td align="right" valign="middle">
-          <p style="font-size: 14px; font-weight: 600; color: #000; margin: 0;">${safePrice.toLocaleString()}</p>
+          <p style="font-size: 14px; font-weight: 600; color: #000; margin: 0;">${priceDisplay}</p>
         </td>
       </tr>
     </table>

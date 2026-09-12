@@ -210,10 +210,12 @@ export default function CartDrawer() {
                                  <div className="pr-4 flex-1 min-w-0">
                                    <span className="text-gray-700 dark:text-gray-300 block font-medium mb-1 truncate">{item.title}</span>
                                    <span className="text-[12px] text-gray-400 block truncate">
-                                      {Object.entries(item.details).filter(([_, v]) => v && v !== 'no').map(([k, v]) => v === 'yes' ? k : v).join(' • ')}
+                                      {Object.entries(item.details).filter(([_, v]) => v && v !== 'no').map(([k, v]) => v === 'yes' ? k : (k === 'description' && String(v).length > 30 ? String(v).substring(0, 30) + '...' : v)).join(' • ')}
                                    </span>
                                  </div>
-                                 <span className="font-medium text-black dark:text-white whitespace-nowrap mt-0.5 shrink-0">₱{item.estimatedPrice.toLocaleString()}</span>
+                                 <span className="font-medium text-black dark:text-white whitespace-nowrap mt-0.5 shrink-0">
+                                   {item.serviceId === 'custom' || item.estimatedPrice === 0 ? 'TBD' : `₱${item.estimatedPrice.toLocaleString()}`}
+                                 </span>
                                </div>
                                ))}
                              </div>
@@ -260,7 +262,7 @@ export default function CartDrawer() {
                                             <span key={key} className="flex items-center capitalize">
                                               {idx > 0 && <span className="mr-2 opacity-30 shrink-0">•</span>}
                                               <span className="truncate max-w-[150px] sm:max-w-[200px] block" title={typeof label === 'string' ? label : ''}>
-                                                {key === 'description' ? 'Custom Scope' : label}
+                                                {key === 'description' ? (String(value).length > 50 ? String(value).substring(0, 50) + '...' : value) : label}
                                               </span>
                                             </span>
                                           );
@@ -268,7 +270,7 @@ export default function CartDrawer() {
                                       </div>
                                     </div>
                                     <div className="mt-4 font-semibold text-black dark:text-white tracking-tight">
-                                      {`₱${item.estimatedPrice.toLocaleString()}`}
+                                      {item.serviceId === 'custom' || item.estimatedPrice === 0 ? 'TBD' : `₱${item.estimatedPrice.toLocaleString()}`}
                                     </div>
                                   </div>
                                 </motion.div>
