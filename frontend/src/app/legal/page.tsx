@@ -57,7 +57,7 @@ function LegalPageContent() {
               return (
                 <button
                   key={tab}
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => setActiveTab(tab as "terms" | "privacy")}
                   className={`relative flex items-center justify-center px-7 py-3 rounded-full text-[14px] font-semibold transition-colors duration-300 outline-none ${
                     isActive 
                       ? 'text-black dark:text-white' 

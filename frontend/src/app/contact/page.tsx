@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { getCsrfToken } from '@/lib/csrf-client';
 
 export default function ContactPage() {
   const { data: session, status } = useSession();
@@ -25,21 +26,53 @@ export default function ContactPage() {
     }
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!session) {
+      // Save draft message if any
+      if (message) {
+        localStorage.setItem('contactDraftMessage', message);
+      }
       router.push(`/login?callbackUrl=${encodeURIComponent(window.location.pathname)}`);
       return;
     }
     
+    if (!captchaValue) {
+      alert("Please complete the CAPTCHA verification.");
+      return;
+    }
+
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': getCsrfToken(),
+        },
+        body: JSON.stringify({
+          name: session.user?.name || name,
+          email: session.user?.email || email,
+          message,
+          captchaToken: captchaValue,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
       setSubmitted(true);
       setMessage('');
       localStorage.removeItem('contactDraftMessage');
       setTimeout(() => setSubmitted(false), 3000);
-    }, 1500);
+    } catch (error) {
+      console.error(error);
+      alert('There was an error sending your message. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -167,7 +200,7 @@ export default function ContactPage() {
               {session && (
                 <div className="mt-2">
                   <ReCAPTCHA
-                    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
                     onChange={(val) => setCaptchaValue(val)}
                     theme="light"
                   />

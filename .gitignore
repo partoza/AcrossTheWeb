@@ -1,0 +1,24 @@
+# Root-level gitignore for the AcrossTheWeb monorepo
+
+# Environment files (never commit secrets)
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+.env*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

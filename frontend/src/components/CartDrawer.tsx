@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { getCsrfToken } from '@/lib/csrf-client';
 
 export default function CartDrawer() {
   const { items, removeFromCart, isCartOpen, setIsCartOpen, totalEstimatedPrice, clearCart } = useCart();
@@ -41,7 +42,7 @@ export default function CartDrawer() {
     }
   }, [isCartOpen]);
 
-  const handleInquire = () => {
+  const handleInquire = async () => {
     if (!session) {
       localStorage.setItem('reopenCart', 'true');
       setIsCartOpen(false);
@@ -53,8 +54,24 @@ export default function CartDrawer() {
         if (!captchaValue) return; // Prevent submission if no captcha
         
         setIsSubmitting(true);
-        // Simulate API call
-        setTimeout(() => {
+        try {
+          const res = await fetch('/api/inquiry', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': getCsrfToken(),
+            },
+            body: JSON.stringify({
+              name: session.user?.name,
+              email: session.user?.email,
+              items: items,
+              totalEstimatedPrice: totalEstimatedPrice,
+              captchaToken: captchaValue,
+            }),
+          });
+          
+          if (!res.ok) throw new Error('Failed to send inquiry');
+
           setIsSubmitting(false);
           setIsCartOpen(false);
           
@@ -62,7 +79,15 @@ export default function CartDrawer() {
              setSubmitStatus('success');
              if (clearCart) clearCart();
           }, 300);
-        }, 2000);
+        } catch (error) {
+          console.error(error);
+          setIsSubmitting(false);
+          setIsCartOpen(false);
+          
+          setTimeout(() => {
+             setSubmitStatus('error');
+          }, 300);
+        }
       }
     }
   };
