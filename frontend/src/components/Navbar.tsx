@@ -123,13 +123,13 @@ export default function Navbar() {
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-4 z-10">
+        <div className="flex items-center gap-2 sm:gap-4 z-10">
           <button 
             onClick={() => setIsCartOpen(true)}
-            className="hidden sm:flex items-center gap-1.5 text-gray-500  hover:text-black  transition-colors cursor-pointer text-[15px] font-medium px-2 py-1.5 rounded-full hover:bg-gray-100 "
+            className="flex items-center gap-1.5 text-gray-500 hover:text-black transition-colors cursor-pointer text-[15px] font-medium px-2 py-1.5 rounded-full hover:bg-gray-100"
           >
             <ShoppingCart className="w-5 h-5" />
-            <span className="bg-black  text-white  text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5 leading-none">
+            <span className="bg-black text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5 leading-none">
               {items.length}
             </span>
           </button>
@@ -197,19 +197,7 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <div className="h-[1px] bg-black/5  w-full my-2" />
-          <button 
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              setIsCartOpen(true);
-            }}
-            className="flex items-center justify-between text-gray-600  py-2.5 px-4 rounded-xl hover:bg-gray-50  w-full text-left font-medium cursor-pointer"
-          >
-            Cart
-            <span className="bg-[#0d9488] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{items.length}</span>
-          </button>
-          
-          <div className="h-[1px] bg-black/5  w-full my-2" />
+          <div className="h-[1px] bg-black/5 w-full my-2" />
 
           {session ? (
             <div className="flex flex-col gap-2">
