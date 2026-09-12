@@ -7,11 +7,11 @@ import { motion } from 'framer-motion';
 
 export default function LoginPage() {
   return (
-    <div className="h-screen -mt-[72px] flex w-full bg-white dark:bg-[#0a0a0a]">
+    <div className="h-screen -mt-[72px] flex w-full bg-white ">
       
       {/* Left Side (Black/Brand Area) */}
-      <div className="flex w-full lg:w-1/2 bg-white dark:bg-[#0a0a0a] p-4 sm:p-6 lg:p-8 h-full">
-        <div className="flex w-full bg-[#050505] text-white flex-col justify-between p-8 lg:p-12 xl:p-16 relative overflow-hidden rounded-[2rem] lg:rounded-[3rem] border border-gray-200 dark:border-white/10 shadow-2xl selection:bg-white/20">
+      <div className="flex w-full lg:w-1/2 bg-white  p-4 sm:p-6 lg:p-8 h-full">
+        <div className="flex w-full bg-[#050505] text-white flex-col justify-between p-8 lg:p-12 xl:p-16 relative overflow-hidden rounded-[2rem] lg:rounded-[3rem] border border-gray-200  shadow-2xl selection:bg-white/20">
           
           {/* Background Image with Dark Blend */}
           <div className="absolute inset-0 z-0">
@@ -96,13 +96,13 @@ export default function LoginPage() {
       </div>
 
       {/* Right Side (White/Login Area) */}
-      <div className="hidden lg:flex w-1/2 flex-col justify-center bg-white dark:bg-[#0a0a0a] px-8 sm:px-16 xl:px-32 relative">
+      <div className="hidden lg:flex w-1/2 flex-col justify-center bg-white  px-8 sm:px-16 xl:px-32 relative">
         
         {/* Mobile Header */}
         <div className="absolute top-8 left-8 right-8 flex lg:hidden justify-between items-center">
           <Link href="/" className="flex items-center gap-2">
-            <img src="/AcrossTheWeb.png" alt="Logo" className="w-5 h-5 object-contain filter invert dark:invert-0" />
-            <span className="font-semibold text-[20px] tracking-tight lowercase text-black dark:text-white">acrosstheweb</span>
+            <img src="/AcrossTheWeb.png" alt="Logo" className="w-5 h-5 object-contain filter invert " />
+            <span className="font-semibold text-[20px] tracking-tight lowercase text-black ">acrosstheweb</span>
           </Link>
         </div>
 
@@ -113,10 +113,10 @@ export default function LoginPage() {
           className="w-full max-w-[400px] mx-auto"
         >
           <div className="mb-8">
-            <h2 className="text-[36px] font-medium text-black dark:text-white tracking-tight mb-3">
+            <h2 className="text-[36px] font-medium text-black  tracking-tight mb-3">
               Ready to get started?
             </h2>
-            <p className="text-gray-500 dark:text-gray-400 text-[14px] leading-relaxed">
+            <p className="text-gray-500  text-[14px] leading-relaxed">
               Sign in with your Google account to access your workspace. No additional passwords needed.
             </p>
           </div>
@@ -128,7 +128,7 @@ export default function LoginPage() {
                 const callbackUrl = searchParams.get('callbackUrl') || '/';
                 signIn('google', { callbackUrl });
               }}
-              className="relative w-full group flex items-center justify-center gap-3 bg-black dark:bg-white text-white dark:text-black px-6 py-4 rounded-[14px] font-medium text-[14px] hover:shadow-xl hover:shadow-black/10 hover:-translate-y-[1px] active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer"
+              className="relative w-full group flex items-center justify-center gap-3 bg-black  text-white  px-6 py-4 rounded-[14px] font-medium text-[14px] hover:shadow-xl hover:shadow-black/10 hover:-translate-y-[1px] active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer"
             >
               <div className="bg-white rounded-full p-0.5">
                 <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
@@ -143,11 +143,11 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-12 text-center">
-            <p className="text-[13px] text-gray-500 dark:text-gray-400">
+            <p className="text-[13px] text-gray-500 ">
               By continuing, you agree to our{' '}
-              <Link href="/legal?tab=terms" className="text-black dark:text-white font-medium hover:underline underline-offset-4 cursor-pointer">Terms of Service</Link>
+              <Link href="/legal?tab=terms" className="text-black  font-medium hover:underline underline-offset-4 cursor-pointer">Terms of Service</Link>
               {' '}and{' '}
-              <Link href="/legal?tab=privacy" className="text-black dark:text-white font-medium hover:underline underline-offset-4 cursor-pointer">Privacy Policy</Link>.
+              <Link href="/legal?tab=privacy" className="text-black  font-medium hover:underline underline-offset-4 cursor-pointer">Privacy Policy</Link>.
             </p>
           </div>
         </motion.div>

@@ -118,7 +118,7 @@ export default function ServicesPage() {
   });
 
   return (
-    <div className="pt-24 lg:pt-40 min-h-screen bg-white dark:bg-[#050505] text-black dark:text-white selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black pb-32">
+    <div className="pt-24 lg:pt-40 min-h-screen bg-white  text-black  selection:bg-black selection:text-white   pb-32">
       {selectedService && (
         <PreferenceModal 
           service={selectedService} 
@@ -141,16 +141,16 @@ export default function ServicesPage() {
         {/* Editorial Search & Filters */}
         <div className="mb-16 lg:mb-24">
           <div className="relative mb-10 lg:mb-12">
-            <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-gray-300 dark:text-gray-800" />
+            <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-gray-300 " />
             <input 
               type="text" 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="What are you looking for?" 
-              className="w-full bg-transparent border-b-2 border-gray-200 dark:border-[#222] pl-10 sm:pl-12 pr-10 py-4 text-xl sm:text-2xl lg:text-3xl font-light focus:outline-none text-black dark:text-white placeholder:text-gray-300 dark:placeholder:text-gray-800 transition-colors focus:border-black dark:focus:border-white"
+              className="w-full bg-transparent border-b-2 border-gray-200  pl-10 sm:pl-12 pr-10 py-4 text-xl sm:text-2xl lg:text-3xl font-light focus:outline-none text-black  placeholder:text-gray-300  transition-colors focus:border-black "
             />
             {searchQuery && (
-              <button onClick={() => setSearchQuery("")} className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black dark:hover:text-white transition-colors cursor-pointer">
+              <button onClick={() => setSearchQuery("")} className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black  transition-colors cursor-pointer">
                 <X className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             )}
@@ -163,8 +163,8 @@ export default function ServicesPage() {
                 onClick={() => setActiveCategory(cat)}
                 className={`text-sm sm:text-[15px] font-medium tracking-tight transition-colors duration-300 cursor-pointer uppercase ${
                   activeCategory === cat 
-                    ? 'text-black dark:text-white border-b-2 border-black dark:border-white pb-1' 
-                    : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 pb-1 border-b-2 border-transparent'
+                    ? 'text-black  border-b-2 border-black  pb-1' 
+                    : 'text-gray-400 hover:text-gray-600  pb-1 border-b-2 border-transparent'
                 }`}
               >
                 {cat}
@@ -175,9 +175,9 @@ export default function ServicesPage() {
 
         {/* Service Grid - Large Naked Minimalist Blocks */}
         {filteredServices.length === 0 ? (
-          <div className="text-center py-32 flex flex-col items-center justify-center border-t border-gray-200 dark:border-gray-900">
+          <div className="text-center py-32 flex flex-col items-center justify-center border-t border-gray-200 ">
             <Search className="w-12 h-12 text-gray-300 mb-6" />
-            <h3 className="text-2xl font-medium text-black dark:text-white mb-4 tracking-tight">No results found.</h3>
+            <h3 className="text-2xl font-medium text-black  mb-4 tracking-tight">No results found.</h3>
             <p className="text-[15px] text-gray-500 max-w-sm mx-auto font-light mb-10">
               We couldn't find any services matching "{searchQuery}".
             </p>
@@ -193,10 +193,10 @@ export default function ServicesPage() {
             {filteredServices.map((service) => (
               <div key={service.id} className="group flex flex-col h-full">
                 {service.image && (
-                  <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden bg-gray-100 dark:bg-[#111] mb-6 relative">
+                  <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden bg-gray-100  mb-6 relative">
                     <img src={service.image} alt={service.title} className="w-full h-full object-cover filter grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105" />
                     {service.tag && (
-                      <div className="absolute top-5 left-5 bg-white/90 dark:bg-black/90 backdrop-blur-md text-black dark:text-white px-4 py-2 rounded-full text-[10px] font-bold tracking-widest uppercase">
+                      <div className="absolute top-5 left-5 bg-white/90  backdrop-blur-md text-black  px-4 py-2 rounded-full text-[10px] font-bold tracking-widest uppercase">
                         {service.tag}
                       </div>
                     )}
@@ -205,22 +205,22 @@ export default function ServicesPage() {
                 
                 <h3 className="text-xl sm:text-2xl font-medium mb-3 tracking-tight group-hover:translate-x-1.5 transition-transform duration-500">{service.title}</h3>
                 
-                <p className="text-[14px] sm:text-[15px] font-light text-gray-500 dark:text-gray-400 mb-8 leading-relaxed max-w-md">
+                <p className="text-[14px] sm:text-[15px] font-light text-gray-500  mb-8 leading-relaxed max-w-md">
                   {service.desc}
                 </p>
                 
                 <div className="flex-grow">
                   <ul className="space-y-3 mb-10">
                     {service.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-center text-[13px] sm:text-[14px] text-gray-600 dark:text-gray-400 border-b border-gray-100 dark:border-gray-900 pb-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700 mr-4 shrink-0" />
+                      <li key={idx} className="flex items-center text-[13px] sm:text-[14px] text-gray-600  border-b border-gray-100  pb-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-gray-300  mr-4 shrink-0" />
                         <span className="font-light">{feat}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
                 
-                <div className="flex items-center justify-between mt-auto pt-5 border-t-2 border-black dark:border-white">
+                <div className="flex items-center justify-between mt-auto pt-5 border-t-2 border-black ">
                   <div>
                     <div className="text-[9px] font-bold tracking-widest text-gray-400 uppercase mb-1">Starting At</div>
                     <div className="text-lg sm:text-xl font-medium">{service.priceLabel}</div>
@@ -230,7 +230,7 @@ export default function ServicesPage() {
                     className="flex items-center gap-2.5 text-[15px] font-medium hover:opacity-60 transition-opacity cursor-pointer group/btn"
                   >
                     Request
-                    <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-[#111] border border-transparent dark:border-white/10 text-black dark:text-white flex items-center justify-center shrink-0 group-hover/btn:scale-110 transition-transform duration-300">
+                    <div className="w-8 h-8 rounded-full bg-gray-100  border border-transparent  text-black  flex items-center justify-center shrink-0 group-hover/btn:scale-110 transition-transform duration-300">
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </div>
                   </button>
@@ -239,10 +239,10 @@ export default function ServicesPage() {
             ))}
             
             {/* Custom Scope Full Width */}
-            <div className="md:col-span-2 xl:col-span-3 group flex flex-col md:flex-row items-start md:items-center justify-between gap-10 bg-gray-50 dark:bg-[#0a0a0a] rounded-3xl p-8 sm:p-12 border border-gray-200 dark:border-[#222] mt-4">
+            <div className="md:col-span-2 xl:col-span-3 group flex flex-col md:flex-row items-start md:items-center justify-between gap-10 bg-gray-50  rounded-3xl p-8 sm:p-12 border border-gray-200  mt-4">
                <div className="flex-1">
                  <div className="flex items-center gap-3 mb-5">
-                   <div className="w-10 h-10 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center shrink-0">
+                   <div className="w-10 h-10 rounded-full bg-black  text-white  flex items-center justify-center shrink-0">
                      <DraftingCompass className="w-5 h-5" />
                    </div>
                    <span className="text-[11px] font-bold uppercase tracking-widest text-gray-400">Flexible Scope</span>
@@ -261,7 +261,7 @@ export default function ServicesPage() {
                     priceLabel: "Custom",
                     priceUnit: "TBD"
                   })}
-                  className="group/btn flex items-center gap-3 bg-black dark:bg-white text-white dark:text-black px-8 py-4 rounded-full text-base font-medium hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl w-full md:w-auto justify-center"
+                  className="group/btn flex items-center gap-3 bg-black  text-white  px-8 py-4 rounded-full text-base font-medium hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl w-full md:w-auto justify-center"
                 >
                   Inquire Now
                   <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />

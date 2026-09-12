@@ -76,11 +76,11 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="-mt-[72px] min-h-screen bg-white dark:bg-[#050505] text-black dark:text-white relative overflow-hidden selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black pb-24">
+    <div className="-mt-[72px] min-h-screen bg-white  text-black  relative overflow-hidden selection:bg-black selection:text-white   pb-24">
       
       {/* Immersive Background Blur / Grain */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-black/5 dark:bg-white/5 rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
-      <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-black/5 dark:bg-white/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-black/5  rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
+      <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-black/5  rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none mix-blend-overlay"></div>
 
       {/* Full Width Hero Image */}
@@ -88,9 +88,9 @@ export default function ContactPage() {
         <img 
           src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" 
           alt="Team collaborating" 
-          className="w-full h-full object-cover object-[center_25%] grayscale opacity-90 dark:opacity-80"
+          className="w-full h-full object-cover object-[center_25%] grayscale opacity-90 "
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent dark:from-[#050505] dark:via-[#050505]/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent  " />
       </div>
 
       <div className="max-w-[1500px] mx-auto w-full px-6 sm:px-12 lg:px-24 relative z-10">
@@ -125,7 +125,7 @@ export default function ContactPage() {
 
             <div>
               <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Visit our office</h3>
-              <p className="text-lg font-medium text-black dark:text-white">
+              <p className="text-lg font-medium text-black ">
                 Davao City,<br />Philippines
               </p>
             </div>
@@ -142,7 +142,7 @@ export default function ContactPage() {
               
               <div className="flex flex-col md:flex-row gap-8 w-full">
                 <div className="relative group flex-1">
-                  <label htmlFor="name" className="text-[15px] font-semibold text-gray-900 dark:text-gray-100 mb-2 block">
+                  <label htmlFor="name" className="text-[15px] font-semibold text-gray-900  mb-2 block">
                     First & Last Name
                   </label>
                   <input 
@@ -152,12 +152,12 @@ export default function ContactPage() {
                     readOnly={!!session}
                     placeholder={session ? '' : 'John Doe'}
                     required
-                    className={`w-full bg-transparent border-b border-gray-200 dark:border-gray-800 py-3 text-[16px] focus:outline-none transition-colors ${session ? 'text-gray-400 dark:text-gray-500 cursor-not-allowed select-none' : 'text-black dark:text-white focus:border-black dark:focus:border-white'}`}
+                    className={`w-full bg-transparent border-b border-gray-200  py-3 text-[16px] focus:outline-none transition-colors ${session ? 'text-gray-400  cursor-not-allowed select-none' : 'text-black  focus:border-black '}`}
                   />
                 </div>
 
                 <div className="relative group flex-1">
-                  <label htmlFor="email" className="text-[15px] font-semibold text-gray-900 dark:text-gray-100 mb-2 block">
+                  <label htmlFor="email" className="text-[15px] font-semibold text-gray-900  mb-2 block">
                     Email Address
                   </label>
                   <input 
@@ -168,13 +168,13 @@ export default function ContactPage() {
                     readOnly={!!session}
                     placeholder={session ? '' : 'john@example.com'}
                     required
-                    className={`w-full bg-transparent border-b border-gray-200 dark:border-gray-800 py-3 text-[16px] focus:outline-none transition-colors ${session ? 'text-gray-400 dark:text-gray-500 cursor-not-allowed select-none' : 'text-black dark:text-white focus:border-black dark:focus:border-white'}`}
+                    className={`w-full bg-transparent border-b border-gray-200  py-3 text-[16px] focus:outline-none transition-colors ${session ? 'text-gray-400  cursor-not-allowed select-none' : 'text-black  focus:border-black '}`}
                   />
                 </div>
               </div>
 
               <div className="relative group">
-                <label htmlFor="message" className="text-[15px] font-semibold text-gray-900 dark:text-gray-100 mb-2 block">
+                <label htmlFor="message" className="text-[15px] font-semibold text-gray-900  mb-2 block">
                   Message
                 </label>
                 <textarea 
@@ -186,7 +186,7 @@ export default function ContactPage() {
                     setMessage(e.target.value);
                     localStorage.setItem('contactDraftMessage', e.target.value);
                   }}
-                  className="w-full resize-none bg-transparent border-b border-gray-300 dark:border-gray-800 py-3 text-[16px] focus:outline-none focus:border-black dark:focus:border-white transition-colors placeholder:text-gray-400"
+                  className="w-full resize-none bg-transparent border-b border-gray-300  py-3 text-[16px] focus:outline-none focus:border-black  transition-colors placeholder:text-gray-400"
                   placeholder="Tell us about your project..."
                 />
                 {!session && (
@@ -210,15 +210,15 @@ export default function ContactPage() {
               <button 
                 type="submit" 
                 disabled={isSubmitting || submitted || (!!session && !captchaValue)}
-                className="mt-4 flex items-center justify-center gap-3 bg-black dark:bg-white text-white dark:text-black px-8 py-3.5 rounded-full text-[14px] font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full sm:w-auto self-start cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed shadow-md"
+                className="mt-4 flex items-center justify-center gap-3 bg-black  text-white  px-8 py-3.5 rounded-full text-[14px] font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full sm:w-auto self-start cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed shadow-md"
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white/30 dark:border-black/30 border-t-white dark:border-t-black rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-white/30  border-t-white  rounded-full animate-spin" />
                     Sending...
                   </span>
                 ) : submitted ? (
-                  <span className="text-green-400 dark:text-green-600">Message sent!</span>
+                  <span className="text-green-400 ">Message sent!</span>
                 ) : (
                   <>
                     Send Message

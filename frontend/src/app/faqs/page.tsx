@@ -30,18 +30,18 @@ const faqs = [
 
 function FAQItem({ question, answer, isOpen, onClick, index }: { question: string; answer: string; isOpen: boolean; onClick: () => void; index: number }) {
   return (
-    <div className="border-b border-gray-300 dark:border-gray-800">
+    <div className="border-b border-gray-300 ">
       <button
         onClick={onClick}
         className="w-full py-6 md:py-8 flex items-center justify-between text-left focus:outline-none group cursor-pointer"
       >
         <div className="flex items-center gap-5 md:gap-8">
           <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden sm:block">0{index + 1}</span>
-          <span className="text-lg sm:text-xl lg:text-2xl font-medium text-black dark:text-white group-hover:text-gray-500 transition-colors duration-300 pr-6 leading-tight">
+          <span className="text-lg sm:text-xl lg:text-2xl font-medium text-black  group-hover:text-gray-500 transition-colors duration-300 pr-6 leading-tight">
             {question}
           </span>
         </div>
-        <div className="relative w-4 h-4 flex items-center justify-center shrink-0 text-black dark:text-white opacity-40 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="relative w-4 h-4 flex items-center justify-center shrink-0 text-black  opacity-40 group-hover:opacity-100 transition-opacity duration-300">
           <div className="absolute w-full h-[1.5px] bg-current transition-transform duration-500" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
           <div className="absolute w-[1.5px] h-full bg-current transition-transform duration-500" style={{ transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)' }} />
         </div>
@@ -55,7 +55,7 @@ function FAQItem({ question, answer, isOpen, onClick, index }: { question: strin
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <p className="pb-8 sm:pl-12 md:pl-16 text-[15px] sm:text-base font-light text-gray-500 dark:text-gray-400 leading-relaxed pr-8">
+            <p className="pb-8 sm:pl-12 md:pl-16 text-[15px] sm:text-base font-light text-gray-500  leading-relaxed pr-8">
               {answer}
             </p>
           </motion.div>
@@ -69,11 +69,11 @@ export default function FAQsPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className="min-h-[calc(100vh-72px)] bg-white dark:bg-[#050505] text-black dark:text-white relative overflow-hidden selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black pb-24">
+    <div className="min-h-[calc(100vh-72px)] bg-white  text-black  relative overflow-hidden selection:bg-black selection:text-white   pb-24">
       
       {/* Immersive Background Blur / Grain */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-black/5 dark:bg-white/5 rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
-      <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-black/5 dark:bg-white/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-black/5  rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
+      <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-black/5  rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none mix-blend-overlay"></div>
 
       <div className="max-w-[1500px] mx-auto w-full px-6 sm:px-12 lg:px-24 pt-16 lg:pt-32 relative z-10">
@@ -110,7 +110,7 @@ export default function FAQsPage() {
                 className="group flex items-center gap-3 text-lg sm:text-xl font-medium hover:opacity-60 transition-opacity w-fit"
               >
                 Contact Support
-                <div className="w-8 h-8 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-8 h-8 rounded-full bg-black  text-white  flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
                   <ArrowUpRight className="w-4 h-4" />
                 </div>
               </Link>
@@ -122,7 +122,7 @@ export default function FAQsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-8 max-w-4xl w-full border-t border-gray-300 dark:border-gray-800"
+            className="lg:col-span-8 max-w-4xl w-full border-t border-gray-300 "
           >
             {faqs.map((faq, index) => (
               <FAQItem 

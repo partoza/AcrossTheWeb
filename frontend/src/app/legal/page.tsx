@@ -26,11 +26,11 @@ function LegalPageContent() {
   const [activeTab, setActiveTab] = useState<'privacy' | 'terms'>(initialTab);
 
   return (
-    <div className="min-h-[calc(100vh-72px)] bg-white dark:bg-[#050505] text-black dark:text-white relative overflow-hidden selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
+    <div className="min-h-[calc(100vh-72px)] bg-white  text-black  relative overflow-hidden selection:bg-black selection:text-white  ">
       
       {/* Background Gradients */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-black/5 dark:bg-white/5 rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
-      <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-black/5 dark:bg-white/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-black/5  rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
+      <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-black/5  rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none mix-blend-overlay"></div>
 
       <div className="max-w-[1000px] mx-auto w-full px-6 sm:px-12 lg:px-24 pt-16 lg:pt-24 pb-24 relative z-10">
@@ -48,7 +48,7 @@ function LegalPageContent() {
 
         {/* Custom Tabs */}
         <div className="flex items-center justify-center mb-16 relative z-20">
-          <div className="bg-gray-100/50 dark:bg-neutral-900/50 p-1.5 rounded-full inline-flex border border-gray-200/50 dark:border-white/10 backdrop-blur-xl">
+          <div className="bg-gray-100/50  p-1.5 rounded-full inline-flex border border-gray-200/50  backdrop-blur-xl">
             {['privacy', 'terms'].map((tab) => {
               const isActive = activeTab === tab;
               const isPrivacy = tab === 'privacy';
@@ -60,14 +60,14 @@ function LegalPageContent() {
                   onClick={() => setActiveTab(tab as "terms" | "privacy")}
                   className={`relative flex items-center justify-center px-7 py-3 rounded-full text-[14px] font-semibold transition-colors duration-300 outline-none ${
                     isActive 
-                      ? 'text-black dark:text-white' 
-                      : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
+                      ? 'text-black ' 
+                      : 'text-gray-500  hover:text-black  hover:bg-black/5 '
                   }`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="legal-tab-pill"
-                      className="absolute inset-0 bg-white dark:bg-[#222] rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-black/5 dark:border-white/5"
+                      className="absolute inset-0 bg-white  rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-black/5 "
                       transition={{ type: "spring", stiffness: 450, damping: 35 }}
                     />
                   )}
@@ -94,19 +94,19 @@ function LegalPageContent() {
                 className="max-w-[760px] mx-auto"
               >
                 
-                <p className="text-[20px] sm:text-[22px] font-light leading-[1.8] text-gray-600 dark:text-gray-400 mb-16">
+                <p className="text-[20px] sm:text-[22px] font-light leading-[1.8] text-gray-600  mb-16">
                   At Across The Web, we believe the best way to secure your data is to not collect it in the first place. When you browse our website, we do not track your activity, use analytics cookies, or monitor your behavior. We have explicitly disabled user analytics to provide a completely private browsing experience.
                 </p>
 
                 <div className="space-y-16">
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-medium text-black dark:text-white mb-6 flex items-baseline gap-4 tracking-tight">
-                      <span className="text-[13px] font-bold text-gray-300 dark:text-gray-700 uppercase tracking-widest">01</span>
+                    <h2 className="text-xl sm:text-2xl font-medium text-black  mb-6 flex items-baseline gap-4 tracking-tight">
+                      <span className="text-[13px] font-bold text-gray-300  uppercase tracking-widest">01</span>
                       How We Use Authentication
                     </h2>
-                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 dark:text-gray-400">
+                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 ">
                       Our Google Sign-In integration is utilized strictly as an anti-spam and identity verification measure. When you authenticate, we simply read your email address from your Google profile to ensure that any service inquiries you submit are attached to a valid, reachable email address. 
-                      <span className="block mt-4 font-medium text-black dark:text-white">
+                      <span className="block mt-4 font-medium text-black ">
                         We do not save your Google profile, name, or email address in any cloud storage or database.
                       </span>
                       The information exists only temporarily in your browser session.
@@ -114,27 +114,27 @@ function LegalPageContent() {
                   </div>
 
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-medium text-black dark:text-white mb-6 flex items-baseline gap-4 tracking-tight">
-                      <span className="text-[13px] font-bold text-gray-300 dark:text-gray-700 uppercase tracking-widest">02</span>
+                    <h2 className="text-xl sm:text-2xl font-medium text-black  mb-6 flex items-baseline gap-4 tracking-tight">
+                      <span className="text-[13px] font-bold text-gray-300  uppercase tracking-widest">02</span>
                       Inquiries and Communications
                     </h2>
-                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 dark:text-gray-400">
+                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 ">
                       If you submit an inquiry for our digital services, the details of your inquiry will be securely emailed directly to our team. Once the email is dispatched, no trace of the submission is kept on our servers.
                     </p>
                   </div>
 
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-medium text-black dark:text-white mb-6 flex items-baseline gap-4 tracking-tight">
-                      <span className="text-[13px] font-bold text-gray-300 dark:text-gray-700 uppercase tracking-widest">03</span>
+                    <h2 className="text-xl sm:text-2xl font-medium text-black  mb-6 flex items-baseline gap-4 tracking-tight">
+                      <span className="text-[13px] font-bold text-gray-300  uppercase tracking-widest">03</span>
                       Third-Party Services
                     </h2>
-                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 dark:text-gray-400">
+                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 ">
                       We do not share, sell, or distribute any information to third parties. Our platform is self-contained and prioritizes zero-knowledge architecture wherever possible.
                     </p>
                   </div>
                 </div>
                 
-                <div className="mt-20 pt-8 border-t border-gray-200 dark:border-white/10 flex flex-col gap-8">
+                <div className="mt-20 pt-8 border-t border-gray-200  flex flex-col gap-8">
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div className="text-[12px] font-medium text-gray-400 uppercase tracking-widest">
                       Last Updated &mdash; September 2026
@@ -149,7 +149,7 @@ function LegalPageContent() {
                       alt="AcrossTheWeb Logo" 
                       className="w-5 h-5 rounded-full object-cover filter grayscale opacity-70"
                     />
-                    <span className="text-[17px] font-bold tracking-tight lowercase text-gray-500 dark:text-gray-400">
+                    <span className="text-[17px] font-bold tracking-tight lowercase text-gray-500 ">
                       acrosstheweb
                     </span>
                   </Link>
@@ -166,37 +166,37 @@ function LegalPageContent() {
               >
                 <div className="space-y-16">
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-medium text-black dark:text-white mb-6 flex items-baseline gap-4 tracking-tight">
-                      <span className="text-[13px] font-bold text-gray-300 dark:text-gray-700 uppercase tracking-widest">01</span>
+                    <h2 className="text-xl sm:text-2xl font-medium text-black  mb-6 flex items-baseline gap-4 tracking-tight">
+                      <span className="text-[13px] font-bold text-gray-300  uppercase tracking-widest">01</span>
                       Acceptance of Terms
                     </h2>
-                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 dark:text-gray-400">
+                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 ">
                       By accessing and using Across The Web's platform and digital services, you accept and agree to be bound by the terms and provision of this agreement.
                     </p>
                   </div>
 
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-medium text-black dark:text-white mb-6 flex items-baseline gap-4 tracking-tight">
-                      <span className="text-[13px] font-bold text-gray-300 dark:text-gray-700 uppercase tracking-widest">02</span>
+                    <h2 className="text-xl sm:text-2xl font-medium text-black  mb-6 flex items-baseline gap-4 tracking-tight">
+                      <span className="text-[13px] font-bold text-gray-300  uppercase tracking-widest">02</span>
                       Service Commissions & Inquiries
                     </h2>
-                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 dark:text-gray-400">
+                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 ">
                       The estimates provided through our platform's cart calculator are preliminary and subject to final review. Submitting an inquiry does not constitute a binding contract. A formal agreement and final quotation will be provided after we review your specific requirements.
                     </p>
                   </div>
 
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-medium text-black dark:text-white mb-6 flex items-baseline gap-4 tracking-tight">
-                      <span className="text-[13px] font-bold text-gray-300 dark:text-gray-700 uppercase tracking-widest">03</span>
+                    <h2 className="text-xl sm:text-2xl font-medium text-black  mb-6 flex items-baseline gap-4 tracking-tight">
+                      <span className="text-[13px] font-bold text-gray-300  uppercase tracking-widest">03</span>
                       Disclaimer of Warranties
                     </h2>
-                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 dark:text-gray-400">
+                    <p className="text-[17px] sm:text-[19px] font-light leading-[1.8] text-gray-600 ">
                       Our services and platform are provided on an "as is" and "as available" basis. Across The Web makes no warranties, expressed or implied, and hereby disclaims all warranties, including without limitation, implied warranties or conditions of merchantability or fitness for a particular purpose.
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-20 pt-8 border-t border-gray-200 dark:border-white/10 flex flex-col gap-8">
+                <div className="mt-20 pt-8 border-t border-gray-200  flex flex-col gap-8">
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div className="text-[12px] font-medium text-gray-400 uppercase tracking-widest">
                       Last Updated &mdash; September 2026
@@ -211,7 +211,7 @@ function LegalPageContent() {
                       alt="AcrossTheWeb Logo" 
                       className="w-5 h-5 rounded-full object-cover filter grayscale opacity-70"
                     />
-                    <span className="text-[17px] font-bold tracking-tight lowercase text-gray-500 dark:text-gray-400">
+                    <span className="text-[17px] font-bold tracking-tight lowercase text-gray-500 ">
                       acrosstheweb
                     </span>
                   </Link>
@@ -227,7 +227,7 @@ function LegalPageContent() {
 
 export default function LegalPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-white dark:bg-[#050505]" />}>
+    <Suspense fallback={<div className="min-h-screen bg-white " />}>
       <LegalPageContent />
     </Suspense>
   );
