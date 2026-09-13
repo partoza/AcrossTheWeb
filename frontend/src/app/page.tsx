@@ -1,10 +1,12 @@
 "use client";
 
-import React from 'react';
-import { Code, Video, Briefcase, DraftingCompass, CheckCircle, Star, Search } from 'lucide-react';
+import React, { useState } from 'react';
+import { Code, Video, Briefcase, DraftingCompass, CheckCircle, Star, Search, ArrowUpRight, X, AlertCircle } from 'lucide-react';
+import * as Dialog from '@radix-ui/react-dialog';
 
 export default function LandingPage() {
   const sectionRef = React.useRef<HTMLElement>(null);
+  const [unavailableMember, setUnavailableMember] = useState<{name: string, role: string} | null>(null);
 
   React.useEffect(() => {
     let animationFrameId: number;
@@ -300,7 +302,7 @@ export default function LandingPage() {
           <div className="flex flex-col border-b border-gray-200 ">
             {[
               { name: "Gina Sasedor", role: "Founder", quote: "We built this so nobody has to choose between learning a skill and getting paid for one.", initial: "GS", image: "/images/gina.png" },
-              { name: "John Rex Partoza", role: "Lead Web Developer", quote: "Every guide we publish is something we've actually used with a real client first.", initial: "JP", image: "/images/rex.png" },
+              { name: "John Rex Partoza", role: "Lead Web Developer", quote: "Every guide we publish is something we've actually used with a real client first.", initial: "JP", image: "/images/rex.png", portfolio: "https://partoza.vercel.app" },
               { name: "Kenneth Crismas", role: "Web Designer", quote: "Hassle-free isn't a slogan here — it's how fast we respond to your first message.", initial: "KC" },
               { name: "Hannah May Alinsonorin", role: "HR Head", quote: "Empowering remote talent by placing them where their skills shine brightest.", initial: "HA", image: "/images/hannah.png" },
             ].map((member, i) => (
@@ -309,7 +311,7 @@ export default function LandingPage() {
                 <div className="flex items-center gap-6 lg:w-5/12 xl:w-1/3 mb-6 lg:mb-0">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden bg-gray-100  shrink-0 border border-black/5  group-hover:scale-105 transition-transform duration-500">
                     {member.image ? (
-                      <img src={member.image} alt={member.name} className="w-full h-full object-cover filter grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" />
+                      <img src={member.image} alt={member.name} className="w-full h-full object-cover transition-all duration-500" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-xl font-light text-gray-400">
                         {member.initial}
@@ -322,10 +324,29 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                <div className="lg:w-7/12 xl:w-2/3 lg:pl-12 xl:pl-24">
-                  <p className="text-lg sm:text-xl lg:text-2xl font-light text-gray-500  leading-relaxed italic font-serif">
+                <div className="lg:w-7/12 xl:w-2/3 lg:pl-12 xl:pl-24 flex flex-col sm:flex-row sm:items-center justify-between gap-6 lg:gap-8">
+                  <p className="text-lg sm:text-xl lg:text-2xl font-light text-gray-500  leading-relaxed italic font-serif flex-1">
                     "{member.quote}"
                   </p>
+                  
+                  <a 
+                    href={member.portfolio || "#"} 
+                    target={member.portfolio ? "_blank" : undefined}
+                    rel={member.portfolio ? "noopener noreferrer" : undefined}
+                    className="flex items-center gap-3 text-black group/btn shrink-0 sm:mt-0 mt-2" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!member.portfolio) {
+                        e.preventDefault();
+                        setUnavailableMember({ name: member.name, role: member.role });
+                      }
+                    }}
+                  >
+                    <span className="text-[15px] sm:text-[17px] font-medium group-hover/btn:opacity-70 transition-opacity">View Portfolio</span>
+                    <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center shrink-0 group-hover/btn:scale-105 transition-transform duration-300">
+                      <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </div>
+                  </a>
                 </div>
                 
               </div>
@@ -333,6 +354,74 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* Trusted By Section */}
+      <section className="py-20 md:py-32 px-6 sm:px-8 md:px-12 bg-white border-t border-gray-200">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col items-center text-center">
+            <div className="inline-flex items-center gap-4 mb-16">
+              <span className="w-12 h-[1px] bg-gray-200 inline-block" />
+              <h3 className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Trusted By</h3>
+              <span className="w-12 h-[1px] bg-gray-200 inline-block" />
+            </div>
+            <div className="flex flex-wrap justify-center items-center gap-16 md:gap-32 lg:gap-40 w-full px-4">
+              {[
+                { name: "Market Reach", src: "/company/MRI Logo (1).png", link: "https://marketreach.global" },
+                { name: "Shalom Center Davao", src: "/company/SHALOM.png", link: "https://shalomcenterdavao.com/" },
+                { name: "Ideas Beyond Limits", src: "/company/ibl.png", link: "https://ideasbeyondlimits.com" },
+              ].map((company, i) => (
+                <a 
+                  key={i} 
+                  href={company.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block transition-transform duration-500 hover:scale-105"
+                >
+                  <img 
+                    src={company.src} 
+                    alt={company.name} 
+                    className="h-10 sm:h-14 md:h-16 lg:h-20 object-contain drop-shadow-sm opacity-90 group-hover:opacity-100 transition-opacity duration-300" 
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio Not Available Modal */}
+      {unavailableMember && (
+        <Dialog.Root open={true} onOpenChange={(open) => !open && setUnavailableMember(null)}>
+          <Dialog.Portal>
+            <Dialog.Overlay className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+            <Dialog.Content className="fixed left-[50%] top-[50%] z-[100] w-[90vw] max-w-md translate-x-[-50%] translate-y-[-50%] bg-white shadow-2xl rounded-3xl sm:rounded-[2.5rem] border border-black/5 p-8 sm:p-10 duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] outline-none">
+              <div className="flex justify-between items-start mb-6">
+                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 shrink-0">
+                  <AlertCircle className="w-6 h-6" />
+                </div>
+                <Dialog.Close asChild>
+                  <button className="rounded-full w-10 h-10 flex items-center justify-center bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer text-gray-500">
+                    <X className="h-5 w-5" />
+                  </button>
+                </Dialog.Close>
+              </div>
+              <Dialog.Title className="text-2xl font-medium tracking-tight text-black mb-2">
+                Portfolio Not Available
+              </Dialog.Title>
+              <Dialog.Description className="text-[15px] font-light text-gray-500 leading-relaxed mb-8">
+                <span className="font-medium text-black">{unavailableMember.name}'s</span> portfolio is currently being updated and isn't available right now. Please check back later!
+              </Dialog.Description>
+              
+              <button 
+                onClick={() => setUnavailableMember(null)}
+                className="w-full bg-black text-white py-4 rounded-xl sm:rounded-2xl font-medium hover:scale-[1.02] active:scale-95 transition-all shadow-lg"
+              >
+                Close
+              </button>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
+      )}
 
     </div>
   );

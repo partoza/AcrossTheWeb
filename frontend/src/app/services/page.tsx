@@ -194,7 +194,7 @@ export default function ServicesPage() {
               <div key={service.id} className="group flex flex-col h-full">
                 {service.image && (
                   <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden bg-gray-100  mb-6 relative">
-                    <img src={service.image} alt={service.title} className="w-full h-full object-cover filter grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105" />
+                    <img src={service.image} alt={service.title} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" />
                     {service.tag && (
                       <div className="absolute top-5 left-5 bg-white/90  backdrop-blur-md text-black  px-4 py-2 rounded-full text-[10px] font-bold tracking-widest uppercase">
                         {service.tag}

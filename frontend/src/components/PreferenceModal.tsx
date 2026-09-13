@@ -143,7 +143,7 @@ export default function PreferenceModal({ service, onClose }: { service: any, on
             <div className="hidden md:flex flex-col w-2/5 bg-gray-50  p-10 border-r border-gray-200  relative">
               {service.image && (
                 <div className="w-full h-56 rounded-[1.5rem] overflow-hidden mb-10 shadow-sm border border-black/5  relative">
-                   <img src={service.image} alt={service.title} className="w-full h-full object-cover filter grayscale opacity-90" />
+                   <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
                 </div>
               )}
               <h2 className="text-3xl lg:text-4xl font-medium tracking-tight mb-4 text-black  leading-tight">
