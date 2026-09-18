@@ -3,6 +3,100 @@
 import React, { useState } from 'react';
 import { Code, Video, Briefcase, DraftingCompass, CheckCircle, Star, Search, ArrowUpRight, X, AlertCircle } from 'lucide-react';
 import * as Dialog from '@radix-ui/react-dialog';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+
+type RexDirection = 'center' | 'up' | 'up-right' | 'right' | 'down-right' | 'down' | 'down-left' | 'left' | 'up-left';
+
+const rexPortraits: Record<RexDirection, string> = {
+  center: '/images/rex/center.png',
+  up: '/images/rex/up.png',
+  'up-right': '/images/rex/up-right.png',
+  right: '/images/rex/right.png',
+  'down-right': '/images/rex/down-right.png',
+  down: '/images/rex/down.png',
+  'down-left': '/images/rex/down-left.png',
+  left: '/images/rex/left.png',
+  'up-left': '/images/rex/up-left.png',
+};
+
+function RexDirectionalPortrait() {
+  const portraitRef = React.useRef<HTMLDivElement>(null);
+  const frameRef = React.useRef<number | null>(null);
+  const [direction, setDirection] = useState<RexDirection>('center');
+  const [displayedDirection, setDisplayedDirection] = useState<RexDirection>('center');
+  const reduceMotion = useReducedMotion();
+
+  React.useEffect(() => {
+    Object.values(rexPortraits).forEach((src) => {
+      const image = new Image();
+      image.src = src;
+    });
+
+    const updateDirection = (event: PointerEvent) => {
+      if (event.pointerType === 'touch') return;
+
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+      frameRef.current = requestAnimationFrame(() => {
+        const rect = portraitRef.current?.getBoundingClientRect();
+        if (!rect) return;
+
+        const deltaX = event.clientX - (rect.left + rect.width / 2);
+        const deltaY = event.clientY - (rect.top + rect.height / 2);
+        const centerRadius = Math.max(18, rect.width * 0.18);
+
+        if (Math.hypot(deltaX, deltaY) < centerRadius) {
+          setDirection('center');
+          return;
+        }
+
+        const directions: Exclude<RexDirection, 'center'>[] = [
+          'right', 'down-right', 'down', 'down-left',
+          'left', 'up-left', 'up', 'up-right',
+        ];
+        const angle = Math.atan2(deltaY, deltaX);
+        const sector = Math.round(angle / (Math.PI / 4));
+        const index = (sector + 8) % 8;
+        setDirection(directions[index]);
+      });
+    };
+
+    const resetDirection = () => setDirection('center');
+    window.addEventListener('pointermove', updateDirection, { passive: true });
+    document.documentElement.addEventListener('mouseleave', resetDirection);
+
+    return () => {
+      window.removeEventListener('pointermove', updateDirection);
+      document.documentElement.removeEventListener('mouseleave', resetDirection);
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+    };
+  }, []);
+
+  return (
+    <div ref={portraitRef} className="relative h-full w-full overflow-hidden" aria-label="John Rex Partoza">
+      <img
+        src={rexPortraits[displayedDirection]}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <AnimatePresence initial={false}>
+        {direction !== displayedDirection && (
+        <motion.img
+          key={direction}
+          src={rexPortraits[direction]}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: reduceMotion ? 0 : 0.14, ease: 'easeOut' }}
+          onAnimationComplete={() => setDisplayedDirection(direction)}
+        />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function LandingPage() {
   const sectionRef = React.useRef<HTMLElement>(null);
@@ -302,7 +396,7 @@ export default function LandingPage() {
           <div className="flex flex-col border-b border-gray-200 ">
             {[
               { name: "Gina Sasedor", role: "Founder", quote: "We built this so nobody has to choose between learning a skill and getting paid for one.", initial: "GS", image: "/images/gina.png" },
-              { name: "John Rex Partoza", role: "Lead Web Developer", quote: "Every guide we publish is something we've actually used with a real client first.", initial: "JP", image: "/images/rex.png", portfolio: "https://partoza.vercel.app" },
+              { name: "John Rex Partoza", role: "Lead Web Developer", quote: "Every guide we publish is something we've actually used with a real client first.", initial: "JP", image: "/images/rex/center.png", directionalPortrait: true, portfolio: "https://partoza.vercel.app" },
               { name: "Kenneth Crismas", role: "Web Designer", quote: "Hassle-free isn't a slogan here — it's how fast we respond to your first message.", initial: "KC" },
               { name: "Hannah May Alinsonorin", role: "HR Head", quote: "Empowering remote talent by placing them where their skills shine brightest.", initial: "HA", image: "/images/hannah.png" },
             ].map((member, i) => (
@@ -310,7 +404,9 @@ export default function LandingPage() {
                 
                 <div className="flex items-center gap-6 lg:w-5/12 xl:w-1/3 mb-6 lg:mb-0">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden bg-gray-100  shrink-0 border border-black/5  group-hover:scale-105 transition-transform duration-500">
-                    {member.image ? (
+                    {member.directionalPortrait ? (
+                      <RexDirectionalPortrait />
+                    ) : member.image ? (
                       <img src={member.image} alt={member.name} className="w-full h-full object-cover transition-all duration-500" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-xl font-light text-gray-400">
