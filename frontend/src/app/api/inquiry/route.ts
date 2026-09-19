@@ -140,7 +140,7 @@ export async function POST(req: Request) {
 
     const mailOptions = {
       from: process.env.SMTP_USER,
-      to: 'acrosstheweb2026@gmail.com',
+      to: 'solutions@acrosstheweb.online',
       cc: email,
       subject: `New Service Inquiry from ${safeName}`,
       html: `
@@ -173,7 +173,7 @@ export async function POST(req: Request) {
   <hr style="border: 0; border-top: 1px solid #eaeaea; margin: 32px 0;" />
   
   <p style="font-size: 12px; color: #666; margin: 0 0 8px 0;">
-    If you have any questions, reach out to <a href="mailto:acrosstheweb2026@gmail.com" style="color: #000; text-decoration: underline;">Support</a>.
+    If you have any questions, reach out to <a href="mailto:solutions@acrosstheweb.online" style="color: #000; text-decoration: underline;">Support</a>.
   </p>
   <p style="font-size: 12px; color: #666; margin: 0;">
     Copyright &copy; 2026 Across The Web. All rights reserved.
