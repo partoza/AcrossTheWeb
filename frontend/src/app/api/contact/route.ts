@@ -99,7 +99,7 @@ export async function POST(req: Request) {
 
     const mailOptions = {
       from: process.env.SMTP_USER,
-      to: 'solutions@acrosstheweb.online',
+      to: 'solution@acrosstheweb.online',
       subject: `New Contact Message from ${safeName}`,
       html: `
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 40px auto; color: #000;">
@@ -120,7 +120,7 @@ export async function POST(req: Request) {
   <hr style="border: 0; border-top: 1px solid #eaeaea; margin: 32px 0;" />
   
   <p style="font-size: 12px; color: #666; margin: 0 0 8px 0;">
-    If you'd like to report an issue, reach out to <a href="mailto:solutions@acrosstheweb.online" style="color: #000; text-decoration: underline;">Support</a>.
+    If you'd like to report an issue, reach out to <a href="mailto:solution@acrosstheweb.online" style="color: #000; text-decoration: underline;">Support</a>.
   </p>
   <p style="font-size: 12px; color: #666; margin: 0;">
     Copyright &copy; 2026 Across The Web. All rights reserved.

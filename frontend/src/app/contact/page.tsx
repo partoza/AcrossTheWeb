@@ -111,8 +111,8 @@ export default function ContactPage() {
 
             <div>
               <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Drop us a line</h3>
-              <a href="mailto:solutions@acrosstheweb.online" className="text-lg font-medium hover:text-gray-500 transition-colors duration-300">
-                solutions@acrosstheweb.online
+              <a href="mailto:solution@acrosstheweb.online" className="text-lg font-medium hover:text-gray-500 transition-colors duration-300">
+                solution@acrosstheweb.online
               </a>
             </div>
             

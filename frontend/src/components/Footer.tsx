@@ -55,8 +55,8 @@ export default function Footer() {
         {/* Column 4: Need Help? */}
         <div>
           <h3 className="font-bold text-black  text-[16px] mb-10 h-5 flex items-center">Need Help?</h3>
-          <a href="mailto:solutions@acrosstheweb.online" className="block text-[15px] font-medium text-[#888] hover:text-black  transition-colors mb-6">
-            solutions@acrosstheweb.online
+          <a href="mailto:solution@acrosstheweb.online" className="block text-[15px] font-medium text-[#888] hover:text-black  transition-colors mb-6">
+            solution@acrosstheweb.online
           </a>
           <div className="flex items-center gap-4 text-[#888]">
             <a href="#" className="hover:text-black  transition-colors" aria-label="Facebook">
