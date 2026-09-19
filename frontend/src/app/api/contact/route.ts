@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { transporter } from '@/lib/mailer';
 import { rateLimit, getClientIp } from '@/lib/rate-limit';
