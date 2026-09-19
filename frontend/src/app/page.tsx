@@ -396,7 +396,7 @@ export default function LandingPage() {
           <div className="flex flex-col border-b border-gray-200 ">
             {[
               { name: "Gina Sasedor", role: "Founder", quote: "We built this so nobody has to choose between learning a skill and getting paid for one.", initial: "GS", image: "/images/gina.png" },
-              { name: "John Rex Partoza", role: "Lead Web Developer", quote: "Every guide we publish is something we've actually used with a real client first.", initial: "JP", image: "/images/rex/center.png", directionalPortrait: true, portfolio: "https://partoza.vercel.app" },
+              { name: "John Rex Partoza", role: "Lead Web Developer", quote: "Every guide we publish is something we've actually used with a real client first.", initial: "JP", image: "/images/rex/center.png", directionalPortrait: true, portfolio: "https://partoza.dev" },
               { name: "Kenneth Crismas", role: "Web Designer", quote: "Hassle-free isn't a slogan here — it's how fast we respond to your first message.", initial: "KC" },
               { name: "Hannah May Alinsonorin", role: "HR Head", quote: "Empowering remote talent by placing them where their skills shine brightest.", initial: "HA", image: "/images/hannah.png" },
             ].map((member, i) => (
